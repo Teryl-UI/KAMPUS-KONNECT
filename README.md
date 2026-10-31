@@ -207,8 +207,8 @@ Follow these steps to run Kampus Konnect on your local machine:
 
 ### 1. Clone the Repository
 ```bash
-git clone https://github.com/fuoye-community/kampus-konnect.git
-cd kampus-konnect
+git clone https://github.com/Teryl-UI/KAMPUS-KONNECT.git
+cd KAMPUS-KONNECT
 ```
 
 ### 2. Install Project Dependencies

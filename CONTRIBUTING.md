@@ -31,13 +31,13 @@ Click the **Fork** button in the top right corner of the GitHub repository page 
 ### 2. Clone Your Fork
 Clone your fork to your local computer:
 ```bash
-git clone https://github.com/<your-github-username>/kampus-konnect.git
-cd kampus-konnect
+git clone https://github.com/<your-github-username>/KAMPUS-KONNECT.git
+cd KAMPUS-KONNECT
 ```
 
 Add the original repository as an `upstream` remote to keep your fork updated:
 ```bash
-git remote add upstream https://github.com/fuoye-community/kampus-konnect.git
+git remote add upstream https://github.com/Teryl-UI/KAMPUS-KONNECT.git
 ```
 
 ### 3. Install Dependencies
