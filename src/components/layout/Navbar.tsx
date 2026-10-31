@@ -19,18 +19,23 @@ export default function Navbar() {
   const pathname = usePathname();
 
   const navLinks = [
-    { href: "/", label: "Home", icon: null },
-    { href: "/ai", label: "Konnect AI", emoji: "✨", badge: "GEMMA" },
-    { href: "/gists", label: "Campus Gists", emoji: "💬", badge: "HOT" },
-    { href: "/events", label: "Events", emoji: "⚡" },
-    { href: "/projects", label: "Projects", emoji: "🚀" },
-    { href: "/teammates", label: "Find People", emoji: "🔌" },
+    { href: "/", label: "Home", shortLabel: "Home", emoji: null },
+    { href: "/ai", label: "Konnect AI", shortLabel: "AI Copilot", emoji: "✨", badge: "GEMMA" },
+    { href: "/gists", label: "Campus Gists", shortLabel: "Gists", emoji: "💬", badge: "HOT" },
+    { href: "/events", label: "Events", shortLabel: "Events", emoji: "⚡" },
+    { href: "/projects", label: "Projects", shortLabel: "Projects", emoji: "🚀" },
+    { href: "/teammates", label: "Find People", shortLabel: "People", emoji: "🔌" },
   ];
 
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
   };
+
+  // Close mobile drawer on route change
+  React.useEffect(() => {
+    setMobileMenuOpen(false);
+  }, [pathname]);
 
   const handleJoinSubmit = (e: React.FormEvent) => {
     e.preventDefault();
@@ -64,15 +69,15 @@ export default function Navbar() {
 
   return (
     <>
-      <header className="sticky top-0 z-40 bg-[var(--color-warm-white)]/95 backdrop-blur-md border-b-2 border-[var(--color-ink)] shadow-sticker-sm transition-all">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20">
+      <header className="sticky top-0 z-40 bg-[var(--color-warm-white)]/95 backdrop-blur-md border-b-2 border-[var(--color-ink)] shadow-sticker-sm transition-all w-full select-none">
+        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20 flex-nowrap w-full gap-2 sm:gap-4">
             {/* Wordmark Logo */}
             <Logo size="md" withTagline={true} />
 
             {/* Desktop Navigation */}
             <nav
-              className="hidden lg:flex items-center gap-1.5 bg-white py-1.5 px-3 rounded-2xl border-2 border-[var(--color-ink)] shadow-sticker"
+              className="hidden lg:flex items-center gap-1 xl:gap-2 bg-white py-1.5 px-2 xl:px-3 rounded-2xl border-2 border-[var(--color-ink)] shadow-sticker shrink-0 flex-nowrap whitespace-nowrap"
               aria-label="Main Navigation"
             >
               {navLinks.map((link) => {
@@ -81,17 +86,18 @@ export default function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`relative inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-heading font-extrabold tracking-wide uppercase transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[var(--color-purple)] ${
+                    className={`relative inline-flex items-center gap-1 xl:gap-1.5 px-2.5 xl:px-3.5 py-1.5 xl:py-2 rounded-xl text-[11px] xl:text-xs font-heading font-extrabold tracking-wide uppercase transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[var(--color-purple)] shrink-0 whitespace-nowrap ${
                       active
                         ? "bg-[var(--color-purple)] text-white shadow-sticker-sm -translate-y-0.5"
                         : "text-[var(--color-ink)] hover:bg-[var(--color-lavender)] hover:text-[var(--color-purple)]"
                     }`}
                     aria-current={active ? "page" : undefined}
                   >
-                    {link.emoji && <span className="text-sm">{link.emoji}</span>}
-                    <span>{link.label}</span>
+                    {link.emoji && <span className="text-xs xl:text-sm shrink-0">{link.emoji}</span>}
+                    <span className="shrink-0 whitespace-nowrap lg:hidden xl:inline">{link.label}</span>
+                    <span className="shrink-0 whitespace-nowrap hidden lg:inline xl:hidden">{link.shortLabel || link.label}</span>
                     {link.badge && (
-                      <span className="text-[9px] font-display px-1.5 py-0.5 rounded-full bg-[var(--color-red)] text-white tracking-wider animate-pulse">
+                      <span className="text-[9px] font-display px-1.5 py-0.5 rounded-full bg-[var(--color-red)] text-white tracking-wider animate-pulse shrink-0 whitespace-nowrap">
                         {link.badge}
                       </span>
                     )}
@@ -101,29 +107,29 @@ export default function Navbar() {
             </nav>
 
             {/* Primary Action Button: Join / Link Up */}
-            <div className="hidden md:flex items-center gap-3">
+            <div className="hidden lg:flex items-center shrink-0 whitespace-nowrap">
               <button
                 onClick={() => setShowJoinModal(true)}
-                className="relative group overflow-hidden px-5 py-2.5 rounded-ui bg-[var(--color-yellow)] hover:bg-amber-300 text-[var(--color-ink)] font-heading font-black text-xs sm:text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker hover:shadow-sticker-lg active:translate-x-0.5 active:translate-y-0.5 transition-all"
+                className="relative group overflow-hidden px-3.5 xl:px-5 py-2 xl:py-2.5 rounded-ui bg-[var(--color-yellow)] hover:bg-amber-300 text-[var(--color-ink)] font-heading font-black text-xs xl:text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker hover:shadow-sticker-lg active:translate-x-0.5 active:translate-y-0.5 transition-all shrink-0 whitespace-nowrap"
               >
-                <span className="inline-flex items-center gap-1.5">
-                  <span>JOIN THE SQUAD</span>
-                  <span className="group-hover:rotate-45 transition-transform">⚡</span>
+                <span className="inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap">
+                  <span>JOIN SQUAD</span>
+                  <span className="group-hover:rotate-45 transition-transform shrink-0">⚡</span>
                 </span>
               </button>
             </div>
 
             {/* Mobile Hamburger Toggle */}
-            <div className="flex lg:hidden items-center gap-2">
+            <div className="flex lg:hidden items-center gap-2 shrink-0 whitespace-nowrap">
               <button
                 onClick={() => setShowJoinModal(true)}
-                className="px-3 py-1.5 rounded-lg bg-[var(--color-yellow)] text-[var(--color-ink)] border-2 border-[var(--color-ink)] font-heading font-extrabold text-xs shadow-sticker-sm"
+                className="px-3 py-1.5 rounded-lg bg-[var(--color-yellow)] text-[var(--color-ink)] border-2 border-[var(--color-ink)] font-heading font-black text-xs shadow-sticker-sm shrink-0 whitespace-nowrap active:translate-y-0.5"
               >
                 JOIN
               </button>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 rounded-xl bg-white border-2 border-[var(--color-ink)] text-[var(--color-ink)] shadow-sticker-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-purple)]"
+                className="p-2 rounded-xl bg-white border-2 border-[var(--color-ink)] text-[var(--color-ink)] shadow-sticker-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-purple)] shrink-0"
                 aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={mobileMenuOpen}
               >
