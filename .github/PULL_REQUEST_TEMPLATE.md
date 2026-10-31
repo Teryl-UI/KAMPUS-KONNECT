@@ -20,3 +20,4 @@ Please provide before & after screenshots or GIFs for any UI modifications.
 - [ ] I have tested these changes locally and verified with `npm run build`.
 - [ ] I have added appropriate accessibility labels and responsive checks.
 - [ ] I have checked that no secrets, private API keys, or personal student info are included.
+
