@@ -162,10 +162,10 @@ export default function FindPeoplePage() {
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
       {/* Header */}
-      <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 border-b-4 border-[var(--color-ink)] pb-6">
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 border-b-4 border-[var(--color-ink)] pb-6">
         <div>
           <div className="flex items-center gap-2 mb-2">
-            <Sticker variant="yellow" rotate="right" emoji="🔌">
+            <Sticker variant="yellow" rotate="none" emoji="🔌">
               CONNECT & LINK-UPS
             </Sticker>
             <span className="text-xs font-meta font-extrabold uppercase text-[var(--color-purple)]">
@@ -186,10 +186,11 @@ export default function FindPeoplePage() {
             setFormErrors({});
             setSubmissionSuccess(null);
           }}
-          className="self-start md:self-auto px-6 py-3.5 rounded-ui bg-[var(--color-purple)] hover:bg-purple-900 text-white font-heading font-black text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker hover:shadow-sticker-lg active:translate-x-0.5 active:translate-y-0.5 transition flex items-center gap-2"
+          className="inline-flex items-center justify-center gap-2 px-6 py-3.5 rounded-2xl bg-[var(--color-purple)] hover:bg-purple-900 text-white font-heading font-black text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker hover:shadow-sticker-lg transition-all shrink-0 whitespace-nowrap leading-none select-none self-start md:self-auto"
         >
-          <Plus className="w-5 h-5 text-[var(--color-yellow)]" />
-          <span>POST A LINK-UP 🔌</span>
+          <Plus className="w-5 h-5 text-[var(--color-yellow)] shrink-0" />
+          <span className="whitespace-nowrap">POST A LINK-UP</span>
+          <span className="shrink-0 text-base">🔌</span>
         </button>
       </div>
 
@@ -425,7 +426,7 @@ export default function FindPeoplePage() {
                     href={profile.contactLink}
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="inline-flex items-center gap-1.5 px-4 py-2 rounded-ui bg-[var(--color-green)] hover:bg-emerald-600 text-white font-heading font-black text-xs uppercase border-2 border-[var(--color-ink)] shadow-sticker-sm active:translate-y-0.5 transition"
+                    className="inline-flex items-center justify-center gap-1.5 px-4 py-2 rounded-xl bg-[var(--color-green)] hover:bg-emerald-600 text-white font-heading font-black text-xs uppercase border-2 border-[var(--color-ink)] shadow-sticker-sm transition-all whitespace-nowrap shrink-0 leading-none select-none"
                     aria-label={`Link up with ${profile.studentName}`}
                   >
                     {profile.contactChannel === "WhatsApp" && <MessageCircle className="w-4 h-4" />}

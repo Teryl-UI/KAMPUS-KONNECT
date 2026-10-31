@@ -585,10 +585,10 @@ export default function HomePage() {
           5. FIND YOUR PEOPLE / LINK-UPS
           ======================================================== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+        <div className="flex flex-col md:flex-row md:items-center justify-between gap-6 mb-8">
           <div>
             <div className="flex items-center gap-2 mb-2">
-              <Sticker variant="yellow" rotate="right" emoji="🔌">
+              <Sticker variant="yellow" rotate="none" emoji="🔌">
                 CONNECT & LINK-UPS
               </Sticker>
               <span className="text-xs font-meta font-extrabold uppercase text-[var(--color-purple)]">
@@ -602,10 +602,10 @@ export default function HomePage() {
 
           <Link
             href="/teammates"
-            className="inline-flex items-center gap-2 px-4 py-2.5 rounded-ui bg-white hover:bg-[var(--color-lavender)] text-[var(--color-purple)] font-heading font-extrabold text-xs uppercase border-2 border-[var(--color-ink)] shadow-sticker transition"
+            className="inline-flex items-center justify-center gap-2 px-5 py-3 rounded-2xl bg-white hover:bg-[var(--color-lavender)] text-[var(--color-purple)] font-heading font-black text-xs uppercase border-2 border-[var(--color-ink)] shadow-sticker hover:shadow-sticker-lg transition-all leading-none whitespace-nowrap shrink-0 select-none self-start md:self-auto"
           >
             <span>BROWSE ALL COLLABORATORS</span>
-            <ArrowRight className="w-4 h-4" />
+            <ArrowRight className="w-4 h-4 shrink-0" />
           </Link>
         </div>
 
@@ -673,10 +673,10 @@ export default function HomePage() {
                   href={profile.contactLink}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="px-3.5 py-1.5 rounded-lg bg-[var(--color-green)] hover:bg-emerald-600 text-white font-heading font-black text-xs uppercase border-2 border-[var(--color-ink)] shadow-sticker-sm flex items-center gap-1.5 transition"
+                  className="inline-flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-[var(--color-green)] hover:bg-emerald-600 text-white font-heading font-black text-xs uppercase border-2 border-[var(--color-ink)] shadow-sticker-sm transition-all leading-none whitespace-nowrap shrink-0 select-none"
                 >
-                  <Send className="w-3.5 h-3.5" />
-                  <span>Link Up</span>
+                  <Send className="w-3.5 h-3.5 shrink-0" />
+                  <span className="whitespace-nowrap">Link Up</span>
                 </a>
               </div>
             </div>

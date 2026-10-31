@@ -70,47 +70,51 @@ export default function Navbar() {
   return (
     <>
       <header className="sticky top-0 z-40 bg-[var(--color-warm-white)]/95 backdrop-blur-md border-b-2 border-[var(--color-ink)] shadow-sticker-sm transition-all w-full select-none">
-        <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20 flex-nowrap w-full gap-2 sm:gap-4">
-            {/* Wordmark Logo */}
-            <Logo size="md" withTagline={true} />
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20 w-full gap-2 lg:gap-4">
+            {/* Wordmark Logo (Left) */}
+            <div className="flex items-center shrink-0">
+              <Logo size="md" withTagline={true} />
+            </div>
 
-            {/* Desktop Navigation */}
-            <nav
-              className="hidden lg:flex items-center gap-1 xl:gap-2 bg-white py-1.5 px-2 xl:px-3 rounded-2xl border-2 border-[var(--color-ink)] shadow-sticker shrink-0 flex-nowrap whitespace-nowrap"
-              aria-label="Main Navigation"
-            >
-              {navLinks.map((link) => {
-                const active = isActive(link.href);
-                return (
-                  <Link
-                    key={link.href}
-                    href={link.href}
-                    className={`relative inline-flex items-center gap-1 xl:gap-1.5 px-2.5 xl:px-3.5 py-1.5 xl:py-2 rounded-xl text-[11px] xl:text-xs font-heading font-extrabold tracking-wide uppercase transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[var(--color-purple)] shrink-0 whitespace-nowrap ${
-                      active
-                        ? "bg-[var(--color-purple)] text-white shadow-sticker-sm"
-                        : "text-[var(--color-ink)] hover:bg-[var(--color-lavender)] hover:text-[var(--color-purple)]"
-                    }`}
-                    aria-current={active ? "page" : undefined}
-                  >
-                    {link.emoji && <span className="text-xs xl:text-sm shrink-0">{link.emoji}</span>}
-                    <span className="shrink-0 whitespace-nowrap lg:hidden xl:inline">{link.label}</span>
-                    <span className="shrink-0 whitespace-nowrap hidden lg:inline xl:hidden">{link.shortLabel || link.label}</span>
-                    {link.badge && (
-                      <span className="text-[9px] font-display px-1.5 py-0.5 rounded-full bg-[var(--color-red)] text-white tracking-wider animate-pulse shrink-0 whitespace-nowrap">
-                        {link.badge}
-                      </span>
-                    )}
-                  </Link>
-                );
-              })}
-            </nav>
+            {/* Desktop Navigation (Center-Aligned) */}
+            <div className="hidden lg:flex flex-1 items-center justify-center min-w-0 px-2">
+              <nav
+                className="flex items-center gap-1 xl:gap-2 bg-white py-1.5 px-2.5 xl:px-3 rounded-2xl border-2 border-[var(--color-ink)] shadow-sticker shrink-0 flex-nowrap whitespace-nowrap"
+                aria-label="Main Navigation"
+              >
+                {navLinks.map((link) => {
+                  const active = isActive(link.href);
+                  return (
+                    <Link
+                      key={link.href}
+                      href={link.href}
+                      className={`relative inline-flex items-center gap-1 xl:gap-1.5 px-2 xl:px-3.5 py-1.5 xl:py-2 rounded-xl text-[11px] xl:text-xs font-heading font-extrabold tracking-wide uppercase transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[var(--color-purple)] shrink-0 whitespace-nowrap ${
+                        active
+                          ? "bg-[var(--color-purple)] text-white shadow-sticker-sm"
+                          : "text-[var(--color-ink)] hover:bg-[var(--color-lavender)] hover:text-[var(--color-purple)]"
+                      }`}
+                      aria-current={active ? "page" : undefined}
+                    >
+                      {link.emoji && <span className="text-xs xl:text-sm shrink-0">{link.emoji}</span>}
+                      <span className="shrink-0 whitespace-nowrap lg:hidden xl:inline">{link.label}</span>
+                      <span className="shrink-0 whitespace-nowrap hidden lg:inline xl:hidden">{link.shortLabel || link.label}</span>
+                      {link.badge && (
+                        <span className="text-[9px] font-display px-1.5 py-0.5 rounded-full bg-[var(--color-red)] text-white tracking-wider animate-pulse shrink-0 whitespace-nowrap">
+                          {link.badge}
+                        </span>
+                      )}
+                    </Link>
+                  );
+                })}
+              </nav>
+            </div>
 
-            {/* Primary Action Button: Join The Squad (Straight, single line, no slant or drop) */}
-            <div className="hidden lg:flex items-center shrink-0 whitespace-nowrap">
+            {/* Primary Action Button: Join The Squad (Right - Straight, fully visible with shadow breathing room) */}
+            <div className="hidden lg:flex items-center shrink-0 justify-end pr-1">
               <button
                 onClick={() => setShowJoinModal(true)}
-                className="relative inline-flex items-center justify-center gap-2 px-4 xl:px-5 py-2.5 rounded-2xl bg-[var(--color-yellow)] hover:bg-amber-300 text-[var(--color-ink)] font-heading font-black text-xs xl:text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker hover:shadow-sticker-lg transition-all shrink-0 whitespace-nowrap select-none leading-none"
+                className="relative inline-flex items-center justify-center gap-1.5 xl:gap-2 px-3.5 xl:px-5 py-2.5 rounded-2xl bg-[var(--color-yellow)] hover:bg-amber-300 text-[var(--color-ink)] font-heading font-black text-xs xl:text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker hover:shadow-sticker-lg transition-all shrink-0 whitespace-nowrap select-none leading-none"
               >
                 <span className="whitespace-nowrap">JOIN THE SQUAD</span>
                 <span className="shrink-0 text-sm">⚡</span>
@@ -118,7 +122,7 @@ export default function Navbar() {
             </div>
 
             {/* Mobile / Tablet Action (Clean, straight, non-wrapping) */}
-            <div className="flex lg:hidden items-center gap-2 shrink-0 whitespace-nowrap">
+            <div className="flex lg:hidden items-center gap-2 shrink-0 whitespace-nowrap pr-1">
               <button
                 onClick={() => setShowJoinModal(true)}
                 className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[var(--color-yellow)] hover:bg-amber-300 text-[var(--color-ink)] border-2 border-[var(--color-ink)] font-heading font-black text-xs shadow-sticker-sm shrink-0 whitespace-nowrap leading-none select-none transition-all"

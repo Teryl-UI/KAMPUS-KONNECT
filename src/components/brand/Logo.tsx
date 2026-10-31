@@ -55,7 +55,7 @@ export default function Logo({ className = "", size = "md", withTagline = false 
           </div>
 
           {withTagline && (
-            <span className="font-meta font-extrabold text-[9px] sm:text-[10px] tracking-widest text-[var(--color-red)] uppercase mt-0.5 hidden xl:block whitespace-nowrap">
+            <span className="font-meta font-extrabold text-[9px] sm:text-[10px] tracking-widest text-[var(--color-red)] uppercase mt-0.5 hidden 2xl:block whitespace-nowrap">
               CONNECT . COLLABORATE . THRIVE.
             </span>
           )}
