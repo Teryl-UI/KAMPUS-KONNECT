@@ -1,8 +1,20 @@
 {
-  "name": "campus-connect-fuoye",
+  "name": "kampus-konnect",
   "version": "1.0.0",
   "private": true,
-  "description": "Campus Connect - An open-source university collaboration platform for students at the Federal University Oye-Ekiti (FUOYE).",
+  "description": "Kampus Konnect - An open-source university community platform for students at Federal University Oye-Ekiti (FUOYE). Connect. Collaborate. Thrive.",
+  "license": "Apache-2.0",
+  "keywords": [
+    "kampus-konnect",
+    "fuoye",
+    "hacktoberfest",
+    "open-source",
+    "student-community",
+    "nextjs",
+    "react",
+    "tailwindcss",
+    "typescript"
+  ],
   "scripts": {
     "dev": "next dev",
     "build": "next build",
