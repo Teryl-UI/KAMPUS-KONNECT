@@ -3,145 +3,233 @@
 import React, { useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Calendar, Users, Code, Menu, X, ArrowRight } from "lucide-react";
+import Logo from "@/components/brand/Logo";
+import Sticker from "@/components/brand/Sticker";
+import { Menu, X, Sparkles, MessageCircle, Calendar, Code, Users, ArrowUpRight } from "lucide-react";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [showJoinModal, setShowJoinModal] = useState(false);
   const pathname = usePathname();
 
   const navLinks = [
-    { href: "/", label: "Home" },
-    { href: "/events", label: "Campus Events", icon: Calendar },
-    { href: "/projects", label: "Student Projects", icon: Code },
-    { href: "/teammates", label: "Find Teammates", icon: Users },
+    { href: "/", label: "Home", icon: null },
+    { href: "/gists", label: "Campus Gists", emoji: "💬", badge: "HOT" },
+    { href: "/events", label: "Events", emoji: "⚡" },
+    { href: "/projects", label: "Projects", emoji: "🚀" },
+    { href: "/teammates", label: "Find People", emoji: "🔌" },
   ];
 
   const isActive = (href: string) => {
-    if (href === "/") {
-      return pathname === "/";
-    }
+    if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
   };
 
   return (
-    <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200">
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16">
-          {/* Logo & Campus Identity */}
-          <Link
-            href="/"
-            className="flex items-center gap-3 group focus:outline-none focus:ring-2 focus:ring-emerald-600 rounded-lg p-1"
-          >
-            <div className="w-10 h-10 rounded-xl bg-emerald-700 flex items-center justify-center text-white font-extrabold text-lg shadow-sm group-hover:bg-emerald-800 transition">
-              CC
-            </div>
-            <div>
-              <div className="flex items-center gap-2">
-                <span className="font-extrabold text-slate-900 text-lg tracking-tight">
-                  Campus Connect
-                </span>
-                <span className="text-[11px] font-semibold bg-emerald-100 text-emerald-800 px-2 py-0.5 rounded-full border border-emerald-200">
-                  FUOYE
-                </span>
-              </div>
-              <p className="text-[11px] text-slate-500 hidden sm:block">
-                Federal University Oye-Ekiti
-              </p>
-            </div>
-          </Link>
+    <>
+      <header className="sticky top-0 z-40 bg-[var(--color-warm-white)]/95 backdrop-blur-md border-b-2 border-[var(--color-ink)] shadow-sticker-sm transition-all">
+        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+          <div className="flex items-center justify-between h-20">
+            {/* Wordmark Logo */}
+            <Logo size="md" withTagline={true} />
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden md:flex items-center gap-1" aria-label="Main Navigation">
+            {/* Desktop Navigation */}
+            <nav
+              className="hidden lg:flex items-center gap-1.5 bg-white py-1.5 px-3 rounded-2xl border-2 border-[var(--color-ink)] shadow-sticker"
+              aria-label="Main Navigation"
+            >
+              {navLinks.map((link) => {
+                const active = isActive(link.href);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`relative inline-flex items-center gap-1.5 px-3.5 py-2 rounded-xl text-xs font-heading font-extrabold tracking-wide uppercase transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[var(--color-purple)] ${
+                      active
+                        ? "bg-[var(--color-purple)] text-white shadow-sticker-sm -translate-y-0.5"
+                        : "text-[var(--color-ink)] hover:bg-[var(--color-lavender)] hover:text-[var(--color-purple)]"
+                    }`}
+                    aria-current={active ? "page" : undefined}
+                  >
+                    {link.emoji && <span className="text-sm">{link.emoji}</span>}
+                    <span>{link.label}</span>
+                    {link.badge && (
+                      <span className="text-[9px] font-display px-1.5 py-0.5 rounded-full bg-[var(--color-red)] text-white tracking-wider animate-pulse">
+                        {link.badge}
+                      </span>
+                    )}
+                  </Link>
+                );
+              })}
+            </nav>
+
+            {/* Primary Action Button: Join / Link Up */}
+            <div className="hidden md:flex items-center gap-3">
+              <button
+                onClick={() => setShowJoinModal(true)}
+                className="relative group overflow-hidden px-5 py-2.5 rounded-ui bg-[var(--color-yellow)] hover:bg-amber-300 text-[var(--color-ink)] font-heading font-black text-xs sm:text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker hover:shadow-sticker-lg active:translate-x-0.5 active:translate-y-0.5 transition-all"
+              >
+                <span className="inline-flex items-center gap-1.5">
+                  <span>JOIN THE SQUAD</span>
+                  <span className="group-hover:rotate-45 transition-transform">⚡</span>
+                </span>
+              </button>
+            </div>
+
+            {/* Mobile Hamburger Toggle */}
+            <div className="flex lg:hidden items-center gap-2">
+              <button
+                onClick={() => setShowJoinModal(true)}
+                className="px-3 py-1.5 rounded-lg bg-[var(--color-yellow)] text-[var(--color-ink)] border-2 border-[var(--color-ink)] font-heading font-extrabold text-xs shadow-sticker-sm"
+              >
+                JOIN
+              </button>
+              <button
+                onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
+                className="p-2 rounded-xl bg-white border-2 border-[var(--color-ink)] text-[var(--color-ink)] shadow-sticker-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-purple)]"
+                aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
+                aria-expanded={mobileMenuOpen}
+              >
+                {mobileMenuOpen ? <X className="w-6 h-6" /> : <Menu className="w-6 h-6" />}
+              </button>
+            </div>
+          </div>
+        </div>
+
+        {/* Mobile Navigation Drawer */}
+        {mobileMenuOpen && (
+          <nav
+            className="lg:hidden border-t-2 border-[var(--color-ink)] bg-[var(--color-warm-white)] px-5 pt-4 pb-6 space-y-2 shadow-2xl animate-in slide-in-from-top-2"
+            aria-label="Mobile Navigation"
+          >
             {navLinks.map((link) => {
               const active = isActive(link.href);
-              const Icon = link.icon;
               return (
                 <Link
                   key={link.href}
                   href={link.href}
-                  className={`flex items-center gap-2 px-3.5 py-2 rounded-lg text-sm font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-emerald-600 ${
+                  onClick={() => setMobileMenuOpen(false)}
+                  className={`flex items-center justify-between px-4 py-3 rounded-xl border-2 font-heading font-bold text-sm uppercase tracking-wider transition ${
                     active
-                      ? "bg-emerald-50 text-emerald-800 border border-emerald-200/80"
-                      : "text-slate-600 hover:text-slate-900 hover:bg-slate-100"
+                      ? "bg-[var(--color-purple)] text-white border-[var(--color-ink)] shadow-sticker"
+                      : "bg-white text-[var(--color-ink)] border-[var(--color-ink)] hover:bg-[var(--color-lavender)]"
                   }`}
                   aria-current={active ? "page" : undefined}
                 >
-                  {Icon && <Icon className="w-4 h-4 text-emerald-600" aria-hidden="true" />}
-                  <span>{link.label}</span>
+                  <span className="flex items-center gap-2.5">
+                    {link.emoji && <span>{link.emoji}</span>}
+                    <span>{link.label}</span>
+                  </span>
+                  {link.badge ? (
+                    <span className="text-[10px] font-display px-2 py-0.5 rounded-full bg-[var(--color-red)] text-white">
+                      {link.badge}
+                    </span>
+                  ) : (
+                    <span className="text-xs opacity-50">→</span>
+                  )}
                 </Link>
               );
             })}
+
+            <div className="pt-3 border-t-2 border-[var(--color-ink)]/10 mt-3">
+              <button
+                onClick={() => {
+                  setMobileMenuOpen(false);
+                  setShowJoinModal(true);
+                }}
+                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[var(--color-red)] text-white font-heading font-black text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker"
+              >
+                <span>BECOME A KONNECTOR 🚀</span>
+              </button>
+            </div>
           </nav>
+        )}
+      </header>
 
-          {/* Primary Action Button */}
-          <div className="hidden md:flex items-center gap-3">
-            <Link
-              href="/teammates"
-              className="flex items-center gap-1.5 px-4 py-2 rounded-xl bg-emerald-700 text-white font-semibold text-sm hover:bg-emerald-800 shadow-sm transition focus:outline-none focus:ring-2 focus:ring-emerald-600 focus:ring-offset-2"
-            >
-              <span>Connect Now</span>
-              <ArrowRight className="w-4 h-4" aria-hidden="true" />
-            </Link>
-          </div>
+      {/* Join Community Modal */}
+      {showJoinModal && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--color-ink)]/70 backdrop-blur-sm animate-in fade-in">
+          <div className="bg-[var(--color-warm-white)] rounded-panel border-4 border-[var(--color-ink)] shadow-sticker-xl max-w-md w-full p-6 sm:p-8 space-y-5 relative overflow-hidden">
+            {/* Corner Decorative bar */}
+            <div className="absolute top-0 left-0 right-0 h-3 bg-gradient-to-r from-[var(--color-yellow)] via-[var(--color-red)] via-[var(--color-purple)] to-[var(--color-green)]" />
 
-          {/* Mobile Hamburger Toggle */}
-          <div className="flex md:hidden items-center">
-            <button
-              onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-              className="p-2 rounded-lg text-slate-700 hover:bg-slate-100 focus:outline-none focus:ring-2 focus:ring-emerald-600"
-              aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
-              aria-expanded={mobileMenuOpen}
+            <div className="flex items-start justify-between pt-1">
+              <div className="space-y-1">
+                <Sticker variant="yellow" rotate="left" emoji="⚡">
+                  STUDENT SQUAD
+                </Sticker>
+                <h2 className="text-2xl font-display uppercase tracking-tight text-[var(--color-ink)] pt-2">
+                  Join Kampus Konnect
+                </h2>
+              </div>
+              <button
+                onClick={() => setShowJoinModal(false)}
+                className="p-2 rounded-xl bg-white border-2 border-[var(--color-ink)] text-[var(--color-ink)] shadow-sticker-sm hover:bg-[var(--color-lavender)]"
+                aria-label="Close modal"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            <p className="text-sm font-body text-slate-700 leading-relaxed">
+              Connect with 1,200+ students across FUOYE Oye & Ikole campuses. Share gists, find hackathon teammates, and get notified about student opportunities.
+            </p>
+
+            <form
+              onSubmit={(e) => {
+                e.preventDefault();
+                alert("Welcome to Kampus Konnect! Your student profile is activated.");
+                setShowJoinModal(false);
+              }}
+              className="space-y-3.5 pt-1"
             >
-              {mobileMenuOpen ? (
-                <X className="w-6 h-6" aria-hidden="true" />
-              ) : (
-                <Menu className="w-6 h-6" aria-hidden="true" />
-              )}
-            </button>
+              <div>
+                <label className="block text-xs font-meta font-extrabold uppercase text-[var(--color-ink)] mb-1">
+                  Full Name / Campus Handle:
+                </label>
+                <input
+                  type="text"
+                  required
+                  placeholder="e.g. Alex Adebayo"
+                  className="w-full px-3.5 py-2.5 rounded-ui border-2 border-[var(--color-ink)] bg-white text-sm font-body focus:outline-none focus:ring-2 focus:ring-[var(--color-purple)] shadow-sticker-sm"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-2.5">
+                <div>
+                  <label className="block text-xs font-meta font-extrabold uppercase text-[var(--color-ink)] mb-1">
+                    Campus:
+                  </label>
+                  <select className="w-full px-3 py-2.5 rounded-ui border-2 border-[var(--color-ink)] bg-white text-xs font-body focus:outline-none shadow-sticker-sm">
+                    <option>Oye (Main Campus)</option>
+                    <option>Ikole Campus</option>
+                  </select>
+                </div>
+                <div>
+                  <label className="block text-xs font-meta font-extrabold uppercase text-[var(--color-ink)] mb-1">
+                    Faculty:
+                  </label>
+                  <select className="w-full px-3 py-2.5 rounded-ui border-2 border-[var(--color-ink)] bg-white text-xs font-body focus:outline-none shadow-sticker-sm">
+                    <option>Science</option>
+                    <option>Engineering</option>
+                    <option>Social Sciences</option>
+                    <option>Arts</option>
+                    <option>Agriculture</option>
+                    <option>Management</option>
+                  </select>
+                </div>
+              </div>
+
+              <button
+                type="submit"
+                className="w-full py-3.5 rounded-ui bg-[var(--color-green)] text-white font-heading font-black text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker hover:shadow-sticker-lg active:translate-x-0.5 active:translate-y-0.5 transition"
+              >
+                JOIN THE KONNECT NOW 🔥
+              </button>
+            </form>
           </div>
         </div>
-      </div>
-
-      {/* Mobile Menu Dropdown */}
-      {mobileMenuOpen && (
-        <nav
-          className="md:hidden border-t border-slate-200 bg-white px-4 pt-3 pb-5 space-y-1.5 shadow-lg"
-          aria-label="Mobile Navigation"
-        >
-          {navLinks.map((link) => {
-            const active = isActive(link.href);
-            const Icon = link.icon;
-            return (
-              <Link
-                key={link.href}
-                href={link.href}
-                onClick={() => setMobileMenuOpen(false)}
-                className={`flex items-center gap-3 px-3.5 py-2.5 rounded-lg text-sm font-medium transition ${
-                  active
-                    ? "bg-emerald-50 text-emerald-800 font-semibold"
-                    : "text-slate-700 hover:bg-slate-100"
-                }`}
-                aria-current={active ? "page" : undefined}
-              >
-                {Icon && <Icon className="w-4 h-4 text-emerald-600" aria-hidden="true" />}
-                <span>{link.label}</span>
-              </Link>
-            );
-          })}
-
-          <div className="pt-3 border-t border-slate-100 mt-2">
-            <Link
-              href="/teammates"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full flex items-center justify-center gap-2 px-4 py-2.5 rounded-xl bg-emerald-700 text-white font-semibold text-sm hover:bg-emerald-800 transition"
-            >
-              <span>Find Teammates</span>
-              <ArrowRight className="w-4 h-4" aria-hidden="true" />
-            </Link>
-          </div>
-        </nav>
       )}
-    </header>
+    </>
   );
 }
-

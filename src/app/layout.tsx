@@ -2,16 +2,16 @@ import type { Metadata } from "next";
 import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
-import DemoDisclaimer from "@/components/layout/DemoDisclaimer";
+import MarqueeTicker from "@/components/brand/MarqueeTicker";
 
 export const metadata: Metadata = {
-  title: "Campus Connect | FUOYE Student Collaboration Platform",
-  description: "Discover campus events, find teammates for hackathons and projects, and showcase student innovation across Federal University Oye-Ekiti (FUOYE).",
-  keywords: ["FUOYE", "Federal University Oye-Ekiti", "Campus Connect", "Student Projects", "Campus Events", "Nigeria Students"],
+  title: "KAMPUS KONNECT — Connect. Collaborate. Thrive.",
+  description: "A bold, energetic student community platform to discover campus activities, connect with students, find collaborators, share projects, and thrive together.",
+  keywords: ["Kampus Konnect", "Student Community", "Campus Events", "Find Teammates", "Student Projects", "Campus Gists", "FUOYE"],
   openGraph: {
-    title: "Campus Connect FUOYE",
-    description: "Collaborative student platform uniting Oye and Ikole campuses.",
-    siteName: "Campus Connect FUOYE",
+    title: "KAMPUS KONNECT — Connect. Collaborate. Thrive.",
+    description: "The official student community and collaboration network.",
+    siteName: "Kampus Konnect",
   },
 };
 
@@ -22,19 +22,27 @@ export default function RootLayout({
 }) {
   return (
     <html lang="en">
-      <body className="min-h-screen flex flex-col bg-slate-50 text-slate-900 antialiased selection:bg-emerald-100 selection:text-emerald-900">
+      <head>
+        <link rel="preconnect" href="https://fonts.googleapis.com" />
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossOrigin="anonymous" />
+        <link
+          href="https://fonts.googleapis.com/css2?family=Bowlby+One+SC&family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=DM+Sans:ital,opsz,wght@0,9..40,400..800;1,9..40,400..800&family=Space+Grotesk:wght@400..700&display=swap"
+          rel="stylesheet"
+        />
+      </head>
+      <body className="min-h-screen flex flex-col bg-[var(--color-warm-white)] text-[var(--color-ink)] font-body antialiased selection:bg-[var(--color-yellow)] selection:text-[var(--color-ink)]">
         {/* Accessible skip link */}
         <a
           href="#main-content"
-          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-emerald-700 focus:text-white focus:rounded-md"
+          className="sr-only focus:not-sr-only focus:absolute focus:top-2 focus:left-2 focus:z-50 focus:px-4 focus:py-2 focus:bg-[var(--color-purple)] focus:text-white focus:rounded-md font-meta text-xs"
         >
           Skip to main content
         </a>
 
-        {/* Demo Disclaimer Banner */}
-        <DemoDisclaimer />
+        {/* Global Live Ticker */}
+        <MarqueeTicker />
 
-        {/* Global Navigation */}
+        {/* Brand Navigation Bar */}
         <Navbar />
 
         {/* Page Content */}
@@ -42,7 +50,7 @@ export default function RootLayout({
           {children}
         </main>
 
-        {/* Global Footer */}
+        {/* Brand Footer */}
         <Footer />
       </body>
     </html>
