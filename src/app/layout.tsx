@@ -3,6 +3,7 @@ import "./globals.css";
 import Navbar from "@/components/layout/Navbar";
 import Footer from "@/components/layout/Footer";
 import MarqueeTicker from "@/components/brand/MarqueeTicker";
+import GemmaAssistant from "@/components/brand/GemmaAssistant";
 
 export const metadata: Metadata = {
   title: "KAMPUS KONNECT — Connect. Collaborate. Thrive.",
@@ -56,6 +57,9 @@ export default function RootLayout({
 
         {/* Brand Footer */}
         <Footer />
+
+        {/* Global Gemma AI Assistant */}
+        <GemmaAssistant />
       </body>
     </html>
   );
