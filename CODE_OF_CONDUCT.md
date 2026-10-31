@@ -36,7 +36,7 @@ This Code of Conduct applies within all community spaces (GitHub repositories, i
 
 ## Enforcement
 
-Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the project maintainers via the repository issue tracker or private contact at `conduct@kampuskonnect.fuoye.edu.ng` (or via repository maintainers). All complaints will be reviewed and investigated promptly and fairly.
+Instances of abusive, harassing, or otherwise unacceptable behavior may be reported to the project maintainers via the GitHub repository issue tracker (https://github.com/Teryl-UI/KAMPUS-KONNECT/issues) or directly to the project lead (Teryl-UI). All complaints will be reviewed and investigated promptly and fairly.
 
 All community leaders are obligated to respect the privacy and security of the reporter of any incident.
 

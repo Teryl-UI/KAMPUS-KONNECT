@@ -320,7 +320,7 @@ This project is licensed under the **Apache License 2.0** ([SPDX: Apache-2.0](ht
 See the **[LICENSE](./LICENSE)** file for full terms and conditions.
 
 ```text
-Copyright 2026 [Copyright Holder - To Be Confirmed]
+Copyright 2026 Teryl-UI
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
