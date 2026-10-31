@@ -101,7 +101,18 @@ Because of the physical distance between Oye and Ikole, student activities remai
 * 1-click contact buttons to reach students directly via WhatsApp, GitHub, or Email.
 * "Post a Link-Up Request" modal with field validation and immediate card rendering.
 
-### 6. Accessibility & Inclusivity
+### 6. Gemma-First AI Platform Integration (`/ai`)
+* **Core Engine**: Powered by Google Gemma (`gemma-4-26b-a4b-it`) via a modular server-side provider service (`src/lib/gemma.ts`).
+* **Konnect AI Workspace**: Dedicated dashboard offering:
+  - **Campus Copilot**: Natural language conversational assistant answering questions grounded in verified events and faculties.
+  - **Project Incubator**: Transforms student ideas into structured 4-week execution plans, MVP features, and role definitions.
+  - **Teammate Matchmaker**: Recommends project spaces matching student skills.
+  - **Study Companion**: Generates analogies, 3-question multiple-choice quizzes, and flashcards.
+  - **Writing Assistant & Networking Coach**: Polishes student project announcements, teammate recruitment pitches, and networking messages.
+* **Persistent Floating Copilot**: 1-click floating action button accessible from every page.
+* **Grounded Guardrails**: Queries authentic campus records and explicitly states when information is unverified to prevent hallucinations.
+
+### 7. Accessibility & Inclusivity
 * Fully responsive navigation drawer with keyboard focus indicators.
 * Landmark "Skip to main content" link for screen-reader and keyboard users.
 * WCAG 2.1 contrast-compliant dark typography on light/yellow backgrounds.
@@ -294,14 +305,16 @@ We actively welcome contributions for **Hacktoberfest** and beyond!
   - [x] Projects showcase with skill filters, upvotes, and detailed view.
   - [x] Find Teammates board with direct WhatsApp/Email/GitHub channels.
   - [x] Keyboard accessibility, custom 404, loading states, and error boundary.
-- [ ] **Phase 3: Database & Production Backend (Hacktoberfest Tasks)**
+- [x] **Phase 3: Gemma-First AI Integration**
+  - [x] Dedicated Konnect AI Workspace (`/ai`) with 5 core student workflow hubs.
+  - [x] Real-time Google Gemma inference engine with resilient model fallbacks.
+  - [x] Grounded campus assistant, project incubator, teammate matcher, study companion, and writing assistant.
+  - [x] Persistent floating copilot available across all pages.
+- [ ] **Phase 4: Database & Production Backend (Hacktoberfest Tasks)**
   - [ ] Connect Supabase / PostgreSQL database for persistent gists and events.
   - [ ] Student email verification (`@fuoye.edu.ng`) and authentication.
   - [ ] Push notifications for upcoming campus events and link-up replies.
-- [ ] **Phase 4: Gemma AI Integration**
-  - [ ] Gemma-powered teammate matchmaking based on project requirements and student skills.
   - [ ] Automated content safety moderation for anonymous campus gists.
-  - [ ] Natural language conversational search for campus activities.
 
 ---
 

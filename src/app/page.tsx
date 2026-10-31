@@ -19,6 +19,9 @@ import {
   Code,
   Users,
   Sparkles,
+  Bot,
+  Lightbulb,
+  GraduationCap,
   MapPin,
   Clock,
   ThumbsUp,
@@ -122,11 +125,19 @@ export default function HomePage() {
                 </Link>
 
                 <Link
-                  href="/teammates"
+                  href="/ai"
                   className="px-7 py-4 rounded-ui bg-[var(--color-purple)] hover:bg-purple-900 text-white font-heading font-black text-sm sm:text-base uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker hover:shadow-sticker-lg active:translate-x-0.5 active:translate-y-0.5 transition-all flex items-center gap-2"
                 >
-                  <Users className="w-5 h-5 text-[var(--color-yellow)]" />
-                  <span>FIND YOUR PEOPLE</span>
+                  <Sparkles className="w-5 h-5 text-[var(--color-yellow)]" />
+                  <span>KONNECT AI (GEMMA)</span>
+                </Link>
+
+                <Link
+                  href="/teammates"
+                  className="px-5 py-4 rounded-ui bg-white hover:bg-slate-50 text-[var(--color-ink)] font-heading font-black text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker-sm transition-all flex items-center gap-2"
+                >
+                  <Users className="w-4 h-4 text-[var(--color-purple)]" />
+                  <span>FIND TEAMMATES</span>
                 </Link>
               </div>
 
@@ -198,6 +209,99 @@ export default function HomePage() {
 
                 {/* Bottom Barcode */}
                 <BarcodeTrim height="h-3" className="mt-4 bg-white opacity-80" />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* ========================================================
+          1.5. GEMMA-FIRST AI COPILOT SHOWCASE
+          ======================================================== */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-[var(--color-purple)] rounded-panel border-4 border-[var(--color-ink)] shadow-sticker-lg p-8 sm:p-10 text-white relative overflow-hidden">
+          <div className="absolute -top-10 -right-10 w-48 h-48 rounded-full bg-[var(--color-yellow)] opacity-20 blur-2xl pointer-events-none" />
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
+            <div className="lg:col-span-7 space-y-4">
+              <div className="flex items-center gap-2">
+                <Sticker variant="yellow" withBrackets={false} emoji="⚡">
+                  GOOGLE GEMMA ENGINE
+                </Sticker>
+                <span className="text-xs font-meta font-extrabold uppercase text-[var(--color-yellow)]">
+                  BUILT FOR FUOYE STUDENTS
+                </span>
+              </div>
+
+              <h2 className="text-3xl sm:text-5xl font-display uppercase tracking-tight text-white leading-tight">
+                MEET KONNECT AI.
+                <br />
+                YOUR CAMPUS INTELLIGENCE COPILOT.
+              </h2>
+
+              <p className="font-body text-sm sm:text-base text-slate-200 leading-relaxed max-w-xl">
+                Powered by Google Gemma, Konnect AI helps you match with hackathon teammates, incubate semester project ideas, understand complex concepts, and explore events across Oye & Ikole campuses.
+              </p>
+
+              <div className="pt-2 flex flex-wrap gap-3">
+                <Link
+                  href="/ai"
+                  className="px-6 py-3 rounded-ui bg-[var(--color-yellow)] hover:bg-amber-300 text-[var(--color-ink)] font-heading font-black text-xs sm:text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker active:translate-x-0.5 active:translate-y-0.5 transition flex items-center gap-2"
+                >
+                  <Sparkles className="w-4 h-4" />
+                  <span>OPEN KONNECT AI WORKSPACE</span>
+                </Link>
+
+                <Link
+                  href="/projects"
+                  className="px-5 py-3 rounded-ui bg-white/10 hover:bg-white/20 text-white font-heading font-bold text-xs sm:text-sm uppercase tracking-wider border-2 border-white/20 transition flex items-center gap-2"
+                >
+                  <span>BROWSE PROJECTS</span>
+                  <ArrowRight className="w-4 h-4" />
+                </Link>
+              </div>
+            </div>
+
+            {/* 4 Feature Cards */}
+            <div className="lg:col-span-5 grid grid-cols-1 sm:grid-cols-2 gap-3 text-[var(--color-ink)]">
+              <div className="p-4 rounded-xl bg-white border-2 border-[var(--color-ink)] shadow-sticker-sm space-y-1">
+                <div className="flex items-center gap-2 text-[var(--color-purple)] font-heading font-black text-xs uppercase">
+                  <Users className="w-4 h-4" />
+                  <span>Teammate Matcher</span>
+                </div>
+                <p className="font-body text-[11px] text-slate-600">
+                  Matches your skills with active hackathon rosters.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl bg-[var(--color-yellow)] border-2 border-[var(--color-ink)] shadow-sticker-sm space-y-1">
+                <div className="flex items-center gap-2 text-[var(--color-ink)] font-heading font-black text-xs uppercase">
+                  <Lightbulb className="w-4 h-4" />
+                  <span>Project Incubator</span>
+                </div>
+                <p className="font-body text-[11px] text-slate-800">
+                  Turns raw ideas into 4-week execution plans.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl bg-[var(--color-soft-green)] border-2 border-[var(--color-ink)] shadow-sticker-sm space-y-1">
+                <div className="flex items-center gap-2 text-[var(--color-success)] font-heading font-black text-xs uppercase">
+                  <GraduationCap className="w-4 h-4" />
+                  <span>Study Companion</span>
+                </div>
+                <p className="font-body text-[11px] text-slate-700">
+                  Concept breakdowns and quizzes on demand.
+                </p>
+              </div>
+
+              <div className="p-4 rounded-xl bg-[var(--color-lavender)] border-2 border-[var(--color-ink)] shadow-sticker-sm space-y-1">
+                <div className="flex items-center gap-2 text-[var(--color-purple)] font-heading font-black text-xs uppercase">
+                  <Bot className="w-4 h-4" />
+                  <span>Campus Copilot</span>
+                </div>
+                <p className="font-body text-[11px] text-slate-700">
+                  Verified answers on Oye and Ikole activities.
+                </p>
               </div>
             </div>
           </div>

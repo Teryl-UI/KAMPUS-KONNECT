@@ -46,6 +46,12 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/ai" className="hover:text-[var(--color-yellow)] transition flex items-center gap-1.5 text-[var(--color-yellow)]">
+                  <span>Konnect AI (Gemma)</span>
+                  <span className="text-[10px] px-1.5 py-0.2 rounded bg-[var(--color-purple)] text-white border border-white/20">NEW</span>
+                </Link>
+              </li>
+              <li>
                 <Link href="/gists" className="hover:text-[var(--color-yellow)] transition flex items-center gap-1.5">
                   <span>Campus Gists</span>
                   <span className="text-[10px] px-1.5 py-0.2 rounded bg-[var(--color-red)] text-white">HOT</span>

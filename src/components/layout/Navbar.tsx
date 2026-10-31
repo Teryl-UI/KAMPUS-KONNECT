@@ -20,6 +20,7 @@ export default function Navbar() {
 
   const navLinks = [
     { href: "/", label: "Home", icon: null },
+    { href: "/ai", label: "Konnect AI", emoji: "✨", badge: "GEMMA" },
     { href: "/gists", label: "Campus Gists", emoji: "💬", badge: "HOT" },
     { href: "/events", label: "Events", emoji: "⚡" },
     { href: "/projects", label: "Projects", emoji: "🚀" },
