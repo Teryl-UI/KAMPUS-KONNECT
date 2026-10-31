@@ -5,7 +5,7 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/brand/Logo";
 import Sticker from "@/components/brand/Sticker";
-import { Menu, X, Sparkles, MessageCircle, Calendar, Code, Users, ArrowUpRight, CheckCircle2, Info, AlertCircle } from "lucide-react";
+import { Menu, X, CheckCircle2, AlertCircle } from "lucide-react";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
@@ -19,12 +19,12 @@ export default function Navbar() {
   const pathname = usePathname();
 
   const navLinks = [
-    { href: "/", label: "Home", shortLabel: "Home", emoji: null },
-    { href: "/ai", label: "Konnect AI", shortLabel: "AI Copilot", emoji: "✨", badge: "GEMMA" },
-    { href: "/gists", label: "Campus Gists", shortLabel: "Gists", emoji: "💬", badge: "HOT" },
-    { href: "/events", label: "Events", shortLabel: "Events", emoji: "⚡" },
-    { href: "/projects", label: "Projects", shortLabel: "Projects", emoji: "🚀" },
-    { href: "/teammates", label: "Find People", shortLabel: "People", emoji: "🔌" },
+    { href: "/", label: "Home", emoji: null },
+    { href: "/ai", label: "Konnect AI", emoji: "✨", badge: "GEMMA" },
+    { href: "/gists", label: "Campus Gists", emoji: "💬", badge: "HOT" },
+    { href: "/events", label: "Events", emoji: "⚡" },
+    { href: "/projects", label: "Projects", emoji: "🚀" },
+    { href: "/teammates", label: "Find People", emoji: "🔌" },
   ];
 
   const isActive = (href: string) => {
@@ -71,69 +71,56 @@ export default function Navbar() {
     <>
       <header className="sticky top-0 z-40 bg-[var(--color-warm-white)]/95 backdrop-blur-md border-b-2 border-[var(--color-ink)] shadow-sticker-sm transition-all w-full select-none">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="flex items-center justify-between h-20 w-full gap-2 lg:gap-4">
-            {/* Wordmark Logo (Left) */}
+          <div className="flex items-center justify-between h-20 w-full gap-4">
+            {/* 1. Left: Wordmark Logo */}
             <div className="flex items-center shrink-0">
               <Logo size="md" withTagline={true} />
             </div>
 
-            {/* Desktop Navigation (Center-Aligned) */}
-            <div className="hidden lg:flex flex-1 items-center justify-center min-w-0 px-2">
-              <nav
-                className="flex items-center gap-1 xl:gap-2 bg-white py-1.5 px-2.5 xl:px-3 rounded-2xl border-2 border-[var(--color-ink)] shadow-sticker shrink-0 flex-nowrap whitespace-nowrap"
-                aria-label="Main Navigation"
-              >
-                {navLinks.map((link) => {
-                  const active = isActive(link.href);
-                  return (
-                    <Link
-                      key={link.href}
-                      href={link.href}
-                      className={`relative inline-flex items-center gap-1 xl:gap-1.5 px-2 xl:px-3.5 py-1.5 xl:py-2 rounded-xl text-[11px] xl:text-xs font-heading font-extrabold tracking-wide uppercase transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[var(--color-purple)] shrink-0 whitespace-nowrap ${
-                        active
-                          ? "bg-[var(--color-purple)] text-white shadow-sticker-sm"
-                          : "text-[var(--color-ink)] hover:bg-[var(--color-lavender)] hover:text-[var(--color-purple)]"
-                      }`}
-                      aria-current={active ? "page" : undefined}
-                    >
-                      {link.emoji && <span className="text-xs xl:text-sm shrink-0">{link.emoji}</span>}
-                      <span className="shrink-0 whitespace-nowrap lg:hidden xl:inline">{link.label}</span>
-                      <span className="shrink-0 whitespace-nowrap hidden lg:inline xl:hidden">{link.shortLabel || link.label}</span>
-                      {link.badge && (
-                        <span className="text-[9px] font-display px-1.5 py-0.5 rounded-full bg-[var(--color-red)] text-white tracking-wider animate-pulse shrink-0 whitespace-nowrap">
-                          {link.badge}
-                        </span>
-                      )}
-                    </Link>
-                  );
-                })}
-              </nav>
-            </div>
+            {/* 2. Center: Desktop Navigation Pill (xl: 1280px+) */}
+            <nav
+              className="hidden xl:flex items-center gap-1.5 bg-white py-1.5 px-3 rounded-full border-2 border-[var(--color-ink)] shadow-sticker shrink-0 whitespace-nowrap"
+              aria-label="Main Navigation"
+            >
+              {navLinks.map((link) => {
+                const active = isActive(link.href);
+                return (
+                  <Link
+                    key={link.href}
+                    href={link.href}
+                    className={`relative inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full text-xs font-heading font-extrabold tracking-wide uppercase transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[var(--color-purple)] shrink-0 whitespace-nowrap ${
+                      active
+                        ? "bg-[var(--color-purple)] text-white shadow-sticker-sm"
+                        : "text-[var(--color-ink)] hover:bg-[var(--color-lavender)] hover:text-[var(--color-purple)]"
+                    }`}
+                    aria-current={active ? "page" : undefined}
+                  >
+                    {link.emoji && <span className="text-sm shrink-0">{link.emoji}</span>}
+                    <span className="shrink-0 whitespace-nowrap">{link.label}</span>
+                    {link.badge && (
+                      <span className="text-[9px] font-display px-1.5 py-0.5 rounded-full bg-[var(--color-red)] text-white tracking-wider animate-pulse shrink-0 whitespace-nowrap">
+                        {link.badge}
+                      </span>
+                    )}
+                  </Link>
+                );
+              })}
+            </nav>
 
-            {/* Primary Action Button: Join The Squad (Right - Straight, fully visible with shadow breathing room) */}
-            <div className="hidden lg:flex items-center shrink-0 justify-end pr-1">
+            {/* 3. Right: Join The Squad CTA + Mobile Menu Button */}
+            <div className="flex items-center gap-2.5 sm:gap-3 shrink-0">
               <button
                 onClick={() => setShowJoinModal(true)}
-                className="relative inline-flex items-center justify-center gap-1.5 xl:gap-2 px-3.5 xl:px-5 py-2.5 rounded-2xl bg-[var(--color-yellow)] hover:bg-amber-300 text-[var(--color-ink)] font-heading font-black text-xs xl:text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker hover:shadow-sticker-lg transition-all shrink-0 whitespace-nowrap select-none leading-none"
-              >
-                <span className="whitespace-nowrap">JOIN THE SQUAD</span>
-                <span className="shrink-0 text-sm">⚡</span>
-              </button>
-            </div>
-
-            {/* Mobile / Tablet Action (Clean, straight, non-wrapping) */}
-            <div className="flex lg:hidden items-center gap-2 shrink-0 whitespace-nowrap pr-1">
-              <button
-                onClick={() => setShowJoinModal(true)}
-                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[var(--color-yellow)] hover:bg-amber-300 text-[var(--color-ink)] border-2 border-[var(--color-ink)] font-heading font-black text-xs shadow-sticker-sm shrink-0 whitespace-nowrap leading-none select-none transition-all"
+                className="inline-flex items-center justify-center gap-1.5 sm:gap-2 px-3.5 sm:px-5 py-2.5 rounded-full bg-[var(--color-yellow)] hover:bg-amber-300 text-[var(--color-ink)] font-heading font-black text-xs sm:text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker hover:shadow-sticker-lg transition-all shrink-0 whitespace-nowrap select-none leading-none"
               >
                 <span className="hidden sm:inline whitespace-nowrap">JOIN THE SQUAD</span>
                 <span className="sm:hidden whitespace-nowrap">JOIN</span>
-                <span className="shrink-0">⚡</span>
+                <span className="shrink-0 text-sm">⚡</span>
               </button>
+
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
-                className="p-2 rounded-xl bg-white border-2 border-[var(--color-ink)] text-[var(--color-ink)] shadow-sticker-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-purple)] shrink-0"
+                className="xl:hidden p-2 rounded-xl bg-white hover:bg-[var(--color-lavender)] border-2 border-[var(--color-ink)] text-[var(--color-ink)] shadow-sticker-sm focus:outline-none focus:ring-2 focus:ring-[var(--color-purple)] shrink-0 transition"
                 aria-label={mobileMenuOpen ? "Close menu" : "Open menu"}
                 aria-expanded={mobileMenuOpen}
               >
@@ -143,10 +130,10 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Navigation Drawer */}
+        {/* Mobile / Tablet Navigation Drawer */}
         {mobileMenuOpen && (
           <nav
-            className="lg:hidden border-t-2 border-[var(--color-ink)] bg-[var(--color-warm-white)] px-5 pt-4 pb-6 space-y-2 shadow-2xl animate-in slide-in-from-top-2"
+            className="xl:hidden border-t-2 border-[var(--color-ink)] bg-[var(--color-warm-white)] px-5 pt-4 pb-6 space-y-2 shadow-2xl animate-in slide-in-from-top-2"
             aria-label="Mobile Navigation"
           >
             {navLinks.map((link) => {
@@ -211,7 +198,7 @@ export default function Navbar() {
 
             <div className="flex items-start justify-between pt-1">
               <div className="space-y-1">
-                <Sticker variant="yellow" rotate="left" emoji="⚡">
+                <Sticker variant="yellow" rotate="none" emoji="⚡">
                   STUDENT SQUAD
                 </Sticker>
                 <h2 id="join-modal-title" className="text-2xl font-display uppercase tracking-tight text-[var(--color-ink)] pt-2">
@@ -264,7 +251,7 @@ export default function Navbar() {
                         setJoinName(e.target.value);
                         if (joinError) setJoinError("");
                       }}
-                      placeholder="e.g. Alex Adebayo"
+                      placeholder="e.g. Demilade Adeleke"
                       className={`w-full px-3.5 py-2.5 rounded-ui border-2 text-sm font-body bg-white focus:outline-none shadow-sticker-sm ${
                         joinError ? "border-red-600 bg-red-50" : "border-[var(--color-ink)]"
                       }`}
@@ -276,7 +263,7 @@ export default function Navbar() {
                     )}
                   </div>
 
-                  <div className="grid grid-cols-2 gap-2.5">
+                  <div className="grid grid-cols-2 gap-3">
                     <div>
                       <label className="block text-xs font-meta font-extrabold uppercase text-[var(--color-ink)] mb-1">
                         Campus:
@@ -284,12 +271,13 @@ export default function Navbar() {
                       <select
                         value={joinCampus}
                         onChange={(e) => setJoinCampus(e.target.value)}
-                        className="w-full px-3 py-2.5 rounded-ui border-2 border-[var(--color-ink)] bg-white text-xs font-body focus:outline-none shadow-sticker-sm"
+                        className="w-full px-3 py-2 rounded-ui border-2 border-[var(--color-ink)] bg-white text-xs font-heading font-bold uppercase focus:outline-none shadow-sticker-sm"
                       >
-                        <option>Oye (Main Campus)</option>
-                        <option>Ikole Campus</option>
+                        <option value="Oye (Main Campus)">Oye (Main Campus)</option>
+                        <option value="Ikole Campus">Ikole Campus</option>
                       </select>
                     </div>
+
                     <div>
                       <label className="block text-xs font-meta font-extrabold uppercase text-[var(--color-ink)] mb-1">
                         Faculty:
@@ -297,29 +285,35 @@ export default function Navbar() {
                       <select
                         value={joinFaculty}
                         onChange={(e) => setJoinFaculty(e.target.value)}
-                        className="w-full px-3 py-2.5 rounded-ui border-2 border-[var(--color-ink)] bg-white text-xs font-body focus:outline-none shadow-sticker-sm"
+                        className="w-full px-3 py-2 rounded-ui border-2 border-[var(--color-ink)] bg-white text-xs font-heading font-bold uppercase focus:outline-none shadow-sticker-sm"
                       >
-                        <option>Science</option>
-                        <option>Engineering</option>
-                        <option>Social Sciences</option>
-                        <option>Arts</option>
-                        <option>Agriculture</option>
-                        <option>Management</option>
+                        <option value="Science">Science</option>
+                        <option value="Engineering">Engineering</option>
+                        <option value="Agriculture">Agriculture</option>
+                        <option value="Arts">Arts</option>
+                        <option value="Social Sciences">Social Sciences</option>
+                        <option value="Management">Management</option>
+                        <option value="Education">Education</option>
+                        <option value="Medical Sciences">Medical Sciences</option>
                       </select>
                     </div>
                   </div>
 
-                  <div className="p-2.5 rounded-ui bg-amber-50 border border-amber-200 text-amber-900 text-[11px] flex items-center gap-2">
-                    <Info className="w-3.5 h-3.5 shrink-0 text-amber-700" />
-                    <span>Demo Mode: No personal records are stored on a server.</span>
+                  <div className="pt-2 flex items-center justify-end gap-3">
+                    <button
+                      type="button"
+                      onClick={closeJoinModal}
+                      className="px-4 py-2 rounded-ui border-2 border-[var(--color-ink)] bg-white font-heading font-bold text-xs uppercase"
+                    >
+                      Cancel
+                    </button>
+                    <button
+                      type="submit"
+                      className="px-6 py-2 rounded-ui bg-[var(--color-yellow)] hover:bg-amber-300 text-[var(--color-ink)] font-heading font-black text-xs uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker hover:shadow-sticker-lg transition"
+                    >
+                      CONFIRM MEMBERSHIP ⚡
+                    </button>
                   </div>
-
-                  <button
-                    type="submit"
-                    className="w-full py-3.5 rounded-ui bg-[var(--color-green)] text-white font-heading font-black text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker hover:shadow-sticker-lg active:translate-x-0.5 active:translate-y-0.5 transition"
-                  >
-                    JOIN THE KONNECT NOW 🔥
-                  </button>
                 </form>
               </>
             )}
