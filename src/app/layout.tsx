@@ -13,6 +13,10 @@ export const metadata: Metadata = {
     description: "The official student community and collaboration network.",
     siteName: "Kampus Konnect",
   },
+  icons: {
+    icon: "/favicon.svg",
+  },
+  manifest: "/manifest.json",
 };
 
 export default function RootLayout({

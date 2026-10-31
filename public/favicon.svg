@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" width="64" height="64">
+  <rect width="64" height="64" rx="16" fill="#57248C" stroke="#19151D" stroke-width="3"/>
+  <rect x="8" y="8" width="48" height="48" rx="10" fill="#FFC928" stroke="#19151D" stroke-width="2.5"/>
+  <!-- Bolt / Plug icon -->
+  <path d="M34 16 L22 34 L31 34 L28 48 L42 30 L33 30 Z" fill="#F32B35" stroke="#19151D" stroke-width="2" stroke-linejoin="round"/>
+</svg>

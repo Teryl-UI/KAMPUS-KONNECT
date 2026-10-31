@@ -1,0 +1,16 @@
+{
+  "name": "Kampus Konnect",
+  "short_name": "Konnect",
+  "description": "Connect. Collaborate. Thrive. — FUOYE Student Community Platform",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#FFF9EF",
+  "theme_color": "#57248C",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml"
+    }
+  ]
+}
