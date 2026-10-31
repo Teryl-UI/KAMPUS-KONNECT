@@ -3,13 +3,31 @@
 import React, { useState, useMemo } from "react";
 import Sticker from "@/components/brand/Sticker";
 import { CAMPUS_EVENTS, CampusEvent } from "@/data/mockData";
-import { Calendar, Search, MapPin, Clock, Users, Check, X, Sparkles, Filter, ArrowUpRight } from "lucide-react";
+import {
+  Calendar,
+  Search,
+  MapPin,
+  Clock,
+  Users,
+  Check,
+  X,
+  Sparkles,
+  Filter,
+  ArrowRight,
+  Info,
+  CalendarPlus,
+  Share2
+} from "lucide-react";
 
 export default function EventsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [selectedCampus, setSelectedCampus] = useState<string>("All");
   const [selectedCategory, setSelectedCategory] = useState<string>("All");
   const [rsvpState, setRsvpState] = useState<Record<string, boolean>>({});
+
+  // Event detail modal state
+  const [activeEventDetail, setActiveEventDetail] = useState<CampusEvent | null>(null);
+  const [copiedShareId, setCopiedShareId] = useState<string | null>(null);
 
   const campusOptions = ["All", "Oye (Main)", "Ikole", "Virtual"];
   const categoryOptions = ["All", "Tech", "Academic", "Career", "Social", "Sports"];
@@ -19,6 +37,12 @@ export default function EventsPage() {
       ...prev,
       [eventId]: !prev[eventId],
     }));
+  };
+
+  const handleShare = (event: CampusEvent) => {
+    navigator.clipboard.writeText(`${window.location.origin}/events?id=${event.id}`);
+    setCopiedShareId(event.id);
+    setTimeout(() => setCopiedShareId(null), 2500);
   };
 
   const resetFilters = () => {
@@ -71,7 +95,7 @@ export default function EventsPage() {
       </div>
 
       {/* Search and Filters */}
-      <section className="bg-white p-5 rounded-card border-2 border-[var(--color-ink)] shadow-sticker space-y-4">
+      <section aria-label="Event search and filters" className="bg-white p-5 rounded-card border-2 border-[var(--color-ink)] shadow-sticker space-y-4">
         {/* Search */}
         <div className="relative">
           <label htmlFor="event-search" className="sr-only">
@@ -90,6 +114,7 @@ export default function EventsPage() {
             <button
               onClick={() => setSearchQuery("")}
               className="absolute right-3.5 top-3 text-slate-400 hover:text-slate-700"
+              aria-label="Clear search text"
             >
               <X className="w-4 h-4" />
             </button>
@@ -202,7 +227,12 @@ export default function EventsPage() {
                   {/* Title & Organizer */}
                   <div>
                     <h2 className="font-heading font-black text-xl text-[var(--color-ink)] leading-snug">
-                      {event.title}
+                      <button
+                        onClick={() => setActiveEventDetail(event)}
+                        className="text-left hover:text-[var(--color-purple)] transition focus:outline-none focus:underline"
+                      >
+                        {event.title}
+                      </button>
                     </h2>
                     <p className="text-xs font-meta text-slate-600 mt-1">
                       By <strong className="text-[var(--color-purple)]">{event.organizer}</strong> • {event.faculty}
@@ -210,7 +240,7 @@ export default function EventsPage() {
                   </div>
 
                   {/* Description */}
-                  <p className="font-body text-xs sm:text-sm text-slate-700 leading-relaxed">
+                  <p className="font-body text-xs sm:text-sm text-slate-700 leading-relaxed line-clamp-3">
                     {event.description}
                   </p>
 
@@ -239,33 +269,136 @@ export default function EventsPage() {
                   </div>
                 </div>
 
-                {/* Footer RSVP */}
-                <div className="pt-4 border-t-2 border-[var(--color-ink)]/10 flex items-center justify-between">
-                  <div className="flex items-center gap-1.5 text-xs font-meta font-bold text-slate-600">
-                    <Users className="w-4 h-4 text-slate-400" />
-                    <span>{currentAttendees} students going</span>
-                  </div>
-
+                {/* Footer Actions: View Details & RSVP */}
+                <div className="pt-4 border-t-2 border-[var(--color-ink)]/10 flex items-center justify-between gap-2">
                   <button
-                    onClick={() => toggleRsvp(event.id)}
-                    className={`px-4 py-2 rounded-ui text-xs font-heading font-black uppercase border-2 border-[var(--color-ink)] shadow-sticker-sm transition ${
-                      isAttending
-                        ? "bg-[var(--color-green)] text-white"
-                        : "bg-[var(--color-yellow)] hover:bg-amber-300 text-[var(--color-ink)]"
-                    }`}
+                    onClick={() => setActiveEventDetail(event)}
+                    className="text-xs font-heading font-black uppercase text-[var(--color-purple)] hover:underline inline-flex items-center gap-1"
                   >
-                    {isAttending ? (
-                      <span className="flex items-center gap-1">
-                        <Check className="w-3.5 h-3.5" /> Attending
-                      </span>
-                    ) : (
-                      <span>RSVP SPOT ⚡</span>
-                    )}
+                    <span>View Details</span>
+                    <ArrowRight className="w-3.5 h-3.5" />
                   </button>
+
+                  <div className="flex items-center gap-2">
+                    <button
+                      onClick={() => toggleRsvp(event.id)}
+                      className={`px-4 py-2 rounded-ui text-xs font-heading font-black uppercase border-2 border-[var(--color-ink)] shadow-sticker-sm transition ${
+                        isAttending
+                          ? "bg-[var(--color-green)] text-white"
+                          : "bg-[var(--color-yellow)] hover:bg-amber-300 text-[var(--color-ink)]"
+                      }`}
+                      aria-pressed={isAttending}
+                    >
+                      {isAttending ? (
+                        <span className="flex items-center gap-1">
+                          <Check className="w-3.5 h-3.5" /> Attending ({currentAttendees})
+                        </span>
+                      ) : (
+                        <span>RSVP SPOT ({currentAttendees}) ⚡</span>
+                      )}
+                    </button>
+                  </div>
                 </div>
               </article>
             );
           })}
+        </div>
+      )}
+
+      {/* EVENT DETAIL MODAL */}
+      {activeEventDetail && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--color-ink)]/70 backdrop-blur-sm animate-in fade-in">
+          <div className="bg-[var(--color-warm-white)] rounded-panel border-4 border-[var(--color-ink)] shadow-sticker-xl max-w-xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 space-y-6">
+            <div className="flex items-start justify-between gap-4 border-b-2 border-[var(--color-ink)] pb-4">
+              <div className="space-y-1">
+                <div className="flex items-center gap-2">
+                  <span className="font-meta font-extrabold text-xs px-2.5 py-0.5 rounded-full bg-[var(--color-yellow)] text-[var(--color-ink)] border border-[var(--color-ink)]">
+                    {activeEventDetail.campus}
+                  </span>
+                  <span className="font-heading font-bold text-xs uppercase px-2 py-0.5 rounded bg-[var(--color-lavender)] text-[var(--color-purple)]">
+                    {activeEventDetail.category}
+                  </span>
+                </div>
+                <h2 className="text-2xl sm:text-3xl font-display uppercase tracking-tight text-[var(--color-ink)] pt-1">
+                  {activeEventDetail.title}
+                </h2>
+                <p className="text-xs font-meta text-slate-600">
+                  Organized by <strong className="text-[var(--color-purple)]">{activeEventDetail.organizer}</strong> • {activeEventDetail.faculty}
+                </p>
+              </div>
+
+              <button
+                onClick={() => setActiveEventDetail(null)}
+                className="p-1.5 rounded-lg border-2 border-[var(--color-ink)] bg-white text-[var(--color-ink)] shadow-sticker-sm hover:bg-[var(--color-lavender)]"
+                aria-label="Close event details"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Description */}
+            <div className="space-y-2">
+              <h3 className="font-heading font-black text-sm uppercase text-[var(--color-purple)] tracking-wide">
+                About this Event
+              </h3>
+              <p className="font-body text-sm text-slate-800 leading-relaxed">
+                {activeEventDetail.description}
+              </p>
+            </div>
+
+            {/* Time, Venue & Logistics Box */}
+            <div className="p-4 rounded-card bg-white border-2 border-[var(--color-ink)] shadow-sticker-sm space-y-3 text-xs font-meta">
+              <div className="flex items-center gap-2.5 text-slate-800">
+                <Clock className="w-4 h-4 text-[var(--color-purple)] shrink-0" />
+                <span>
+                  <strong>Date & Time:</strong> {activeEventDetail.date} ({activeEventDetail.time})
+                </span>
+              </div>
+              <div className="flex items-center gap-2.5 text-slate-800">
+                <MapPin className="w-4 h-4 text-[var(--color-red)] shrink-0" />
+                <span>
+                  <strong>Venue Location:</strong> {activeEventDetail.venue}
+                </span>
+              </div>
+              <div className="flex items-center gap-2.5 text-slate-800">
+                <Users className="w-4 h-4 text-[var(--color-green)] shrink-0" />
+                <span>
+                  <strong>Total Attendance:</strong>{" "}
+                  {activeEventDetail.attendeesCount + (rsvpState[activeEventDetail.id] ? 1 : 0)} students registered
+                </span>
+              </div>
+            </div>
+
+            {/* Action Buttons in Modal */}
+            <div className="pt-2 flex flex-col sm:flex-row items-center gap-3">
+              <button
+                onClick={() => toggleRsvp(activeEventDetail.id)}
+                className={`w-full py-3 rounded-ui text-xs font-heading font-black uppercase border-2 border-[var(--color-ink)] shadow-sticker transition ${
+                  rsvpState[activeEventDetail.id]
+                    ? "bg-[var(--color-green)] text-white"
+                    : "bg-[var(--color-yellow)] hover:bg-amber-300 text-[var(--color-ink)]"
+                }`}
+              >
+                {rsvpState[activeEventDetail.id] ? "RSVP CONFIRMED ✓" : "RSVP FOR THIS EVENT ⚡"}
+              </button>
+
+              <button
+                onClick={() => handleShare(activeEventDetail)}
+                className="w-full sm:w-auto px-4 py-3 rounded-ui bg-white hover:bg-[var(--color-lavender)] text-[var(--color-ink)] font-heading font-bold text-xs uppercase border-2 border-[var(--color-ink)] shadow-sticker transition flex items-center justify-center gap-1.5 shrink-0"
+              >
+                <Share2 className="w-4 h-4" />
+                <span>{copiedShareId === activeEventDetail.id ? "Link Copied!" : "Share"}</span>
+              </button>
+            </div>
+
+            {/* Demo Simulation Notice */}
+            <div className="p-3 rounded-ui bg-amber-50 border border-amber-200 text-amber-900 text-xs flex items-center gap-2">
+              <Info className="w-4 h-4 shrink-0 text-amber-700" />
+              <span>
+                <strong>Demo Mode:</strong> RSVPs are simulated in browser memory for this demonstration.
+              </span>
+            </div>
+          </div>
         </div>
       )}
     </div>

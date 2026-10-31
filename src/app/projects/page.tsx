@@ -4,13 +4,24 @@ import React, { useState, useMemo } from "react";
 import Link from "next/link";
 import Sticker from "@/components/brand/Sticker";
 import { STUDENT_PROJECTS, StudentProject } from "@/data/mockData";
-import { Code, Search, ThumbsUp, ArrowRight, ExternalLink, Users, X, Sparkles } from "lucide-react";
+import { Code, Search, ThumbsUp, ArrowRight, ExternalLink, Users, X, Sparkles, Tag, Check } from "lucide-react";
 
 export default function ProjectsPage() {
   const [searchQuery, setSearchQuery] = useState("");
   const [contributionFilter, setContributionFilter] = useState<"all" | "open">("all");
   const [campusFilter, setCampusFilter] = useState<string>("All");
+  const [selectedSkill, setSelectedSkill] = useState<string>("All");
   const [upvotesState, setUpvotesState] = useState<Record<string, boolean>>({});
+
+  // Dynamically extract all unique skills from projects
+  const allSkills = useMemo(() => {
+    const set = new Set<string>();
+    STUDENT_PROJECTS.forEach((p) => {
+      p.tags.forEach((t) => set.add(t));
+      p.openRoles.forEach((r) => r.skills.forEach((s) => set.add(s)));
+    });
+    return ["All", ...Array.from(set)];
+  }, []);
 
   const toggleUpvote = (projectId: string) => {
     setUpvotesState((prev) => ({
@@ -23,6 +34,7 @@ export default function ProjectsPage() {
     setSearchQuery("");
     setContributionFilter("all");
     setCampusFilter("All");
+    setSelectedSkill("All");
   };
 
   const filteredProjects = useMemo(() => {
@@ -43,9 +55,16 @@ export default function ProjectsPage() {
       const matchesCampus =
         campusFilter === "All" || project.campus.toLowerCase().includes(campusFilter.toLowerCase());
 
-      return matchesSearch && matchesContribution && matchesCampus;
+      const matchesSkill =
+        selectedSkill === "All" ||
+        project.tags.some((t) => t.toLowerCase() === selectedSkill.toLowerCase()) ||
+        project.openRoles.some((r) =>
+          r.skills.some((s) => s.toLowerCase() === selectedSkill.toLowerCase())
+        );
+
+      return matchesSearch && matchesContribution && matchesCampus && matchesSkill;
     });
-  }, [searchQuery, contributionFilter, campusFilter]);
+  }, [searchQuery, contributionFilter, campusFilter, selectedSkill]);
 
   return (
     <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 space-y-8">
@@ -64,13 +83,13 @@ export default function ProjectsPage() {
             Student Projects & Inventions
           </h1>
           <p className="font-body text-sm sm:text-base text-slate-700 max-w-xl mt-1">
-            Software apps, robotics hardware, AI tools, and research created by FUOYE students. Explore open contribution opportunities!
+            Software apps, robotics hardware, IoT prototypes, and research created by FUOYE students. Explore open contribution opportunities!
           </p>
         </div>
       </div>
 
       {/* Search and Filters */}
-      <section className="bg-white p-5 rounded-card border-2 border-[var(--color-ink)] shadow-sticker space-y-4">
+      <section aria-label="Project search and filters" className="bg-white p-5 rounded-card border-2 border-[var(--color-ink)] shadow-sticker space-y-4">
         {/* Search Bar */}
         <div className="relative">
           <label htmlFor="project-search" className="sr-only">
@@ -89,13 +108,14 @@ export default function ProjectsPage() {
             <button
               onClick={() => setSearchQuery("")}
               className="absolute right-3.5 top-3 text-slate-400 hover:text-slate-700"
+              aria-label="Clear search"
             >
               <X className="w-4 h-4" />
             </button>
           )}
         </div>
 
-        {/* Filters */}
+        {/* Primary Status & Campus Filter Row */}
         <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-1">
           {/* Status filter */}
           <div className="flex items-center gap-2">
@@ -144,17 +164,41 @@ export default function ProjectsPage() {
             ))}
           </div>
         </div>
+
+        {/* REQ 2: FILTER BY SKILLS BAR */}
+        <div className="pt-2 border-t-2 border-[var(--color-ink)]/10 space-y-1.5">
+          <div className="flex items-center gap-1.5 text-xs font-meta font-extrabold uppercase text-slate-600">
+            <Tag className="w-3.5 h-3.5 text-[var(--color-purple)]" />
+            <span>Filter by Skills & Tech Stack:</span>
+          </div>
+
+          <div className="flex flex-wrap gap-1.5 max-h-24 overflow-y-auto">
+            {allSkills.slice(0, 15).map((skill) => (
+              <button
+                key={skill}
+                onClick={() => setSelectedSkill(skill)}
+                className={`px-2.5 py-1 rounded-md text-xs font-meta font-bold transition border ${
+                  selectedSkill === skill
+                    ? "bg-[var(--color-ink)] text-white border-[var(--color-ink)] shadow-sticker-sm"
+                    : "bg-slate-100 text-slate-700 border-slate-300 hover:bg-slate-200"
+                }`}
+              >
+                {skill === "All" ? "All Skills" : `#${skill}`}
+              </button>
+            ))}
+          </div>
+        </div>
       </section>
 
       {/* Results Header Count */}
       <div className="flex items-center justify-between text-xs font-meta text-slate-600 px-1">
         <span>
           Showing <strong>{filteredProjects.length}</strong> {filteredProjects.length === 1 ? "project" : "projects"}
-          {(contributionFilter !== "all" || campusFilter !== "All" || searchQuery) && (
+          {(contributionFilter !== "all" || campusFilter !== "All" || selectedSkill !== "All" || searchQuery) && (
             <span> (filtered)</span>
           )}
         </span>
-        {(contributionFilter !== "all" || campusFilter !== "All" || searchQuery) && (
+        {(contributionFilter !== "all" || campusFilter !== "All" || selectedSkill !== "All" || searchQuery) && (
           <button
             onClick={resetFilters}
             className="text-[var(--color-purple)] hover:underline font-extrabold uppercase"
@@ -173,7 +217,7 @@ export default function ProjectsPage() {
               No student projects matched your search
             </h3>
             <p className="font-body text-xs sm:text-sm text-slate-600 max-w-md mx-auto">
-              Try adjusting your technology keywords or selecting &quot;All Projects&quot;.
+              Try adjusting your technology keywords or selecting &quot;All Skills&quot;.
             </p>
           </div>
           <button
@@ -231,12 +275,18 @@ export default function ProjectsPage() {
                   {/* Tech stack tags */}
                   <div className="flex flex-wrap gap-1.5 pt-1">
                     {project.tags.map((tag, i) => (
-                      <span
+                      <button
                         key={i}
-                        className="text-[11px] font-meta font-bold px-2 py-0.5 rounded bg-slate-100 text-slate-700"
+                        onClick={() => setSelectedSkill(tag)}
+                        className={`text-[11px] font-meta font-bold px-2 py-0.5 rounded transition ${
+                          selectedSkill === tag
+                            ? "bg-[var(--color-purple)] text-white"
+                            : "bg-slate-100 text-slate-700 hover:bg-slate-200"
+                        }`}
+                        title={`Filter by ${tag}`}
                       >
                         #{tag}
-                      </span>
+                      </button>
                     ))}
                   </div>
 

@@ -5,11 +5,17 @@ import Link from "next/link";
 import { usePathname } from "next/navigation";
 import Logo from "@/components/brand/Logo";
 import Sticker from "@/components/brand/Sticker";
-import { Menu, X, Sparkles, MessageCircle, Calendar, Code, Users, ArrowUpRight } from "lucide-react";
+import { Menu, X, Sparkles, MessageCircle, Calendar, Code, Users, ArrowUpRight, CheckCircle2, Info, AlertCircle } from "lucide-react";
 
 export default function Navbar() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showJoinModal, setShowJoinModal] = useState(false);
+  const [joinSuccess, setJoinSuccess] = useState<string | null>(null);
+  const [joinName, setJoinName] = useState("");
+  const [joinCampus, setJoinCampus] = useState("Oye (Main Campus)");
+  const [joinFaculty, setJoinFaculty] = useState("Science");
+  const [joinError, setJoinError] = useState("");
+
   const pathname = usePathname();
 
   const navLinks = [
@@ -23,6 +29,24 @@ export default function Navbar() {
   const isActive = (href: string) => {
     if (href === "/") return pathname === "/";
     return pathname.startsWith(href);
+  };
+
+  const handleJoinSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!joinName.trim()) {
+      setJoinError("Please enter your name or campus handle.");
+      return;
+    }
+    setJoinError("");
+    const refCode = `KK-MEM-${Math.floor(1000 + Math.random() * 9000)}`;
+    setJoinSuccess(refCode);
+  };
+
+  const closeJoinModal = () => {
+    setShowJoinModal(false);
+    setJoinSuccess(null);
+    setJoinName("");
+    setJoinError("");
   };
 
   return (
@@ -146,7 +170,7 @@ export default function Navbar() {
         )}
       </header>
 
-      {/* Join Community Modal */}
+      {/* Join Community Modal with Validated State */}
       {showJoinModal && (
         <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--color-ink)]/70 backdrop-blur-sm animate-in fade-in">
           <div className="bg-[var(--color-warm-white)] rounded-panel border-4 border-[var(--color-ink)] shadow-sticker-xl max-w-md w-full p-6 sm:p-8 space-y-5 relative overflow-hidden">
@@ -163,7 +187,7 @@ export default function Navbar() {
                 </h2>
               </div>
               <button
-                onClick={() => setShowJoinModal(false)}
+                onClick={closeJoinModal}
                 className="p-2 rounded-xl bg-white border-2 border-[var(--color-ink)] text-[var(--color-ink)] shadow-sticker-sm hover:bg-[var(--color-lavender)]"
                 aria-label="Close modal"
               >
@@ -171,62 +195,102 @@ export default function Navbar() {
               </button>
             </div>
 
-            <p className="text-sm font-body text-slate-700 leading-relaxed">
-              Connect with 1,200+ students across FUOYE Oye & Ikole campuses. Share gists, find hackathon teammates, and get notified about student opportunities.
-            </p>
-
-            <form
-              onSubmit={(e) => {
-                e.preventDefault();
-                alert("Welcome to Kampus Konnect! Your student profile is activated.");
-                setShowJoinModal(false);
-              }}
-              className="space-y-3.5 pt-1"
-            >
-              <div>
-                <label className="block text-xs font-meta font-extrabold uppercase text-[var(--color-ink)] mb-1">
-                  Full Name / Campus Handle:
-                </label>
-                <input
-                  type="text"
-                  required
-                  placeholder="e.g. Alex Adebayo"
-                  className="w-full px-3.5 py-2.5 rounded-ui border-2 border-[var(--color-ink)] bg-white text-sm font-body focus:outline-none focus:ring-2 focus:ring-[var(--color-purple)] shadow-sticker-sm"
-                />
-              </div>
-
-              <div className="grid grid-cols-2 gap-2.5">
-                <div>
-                  <label className="block text-xs font-meta font-extrabold uppercase text-[var(--color-ink)] mb-1">
-                    Campus:
-                  </label>
-                  <select className="w-full px-3 py-2.5 rounded-ui border-2 border-[var(--color-ink)] bg-white text-xs font-body focus:outline-none shadow-sticker-sm">
-                    <option>Oye (Main Campus)</option>
-                    <option>Ikole Campus</option>
-                  </select>
+            {joinSuccess ? (
+              <div className="p-5 rounded-card bg-[var(--color-soft-green)] border-2 border-[var(--color-green)] text-[var(--color-ink)] space-y-3">
+                <div className="flex items-center gap-2 text-[var(--color-success)] font-heading font-black text-base uppercase">
+                  <CheckCircle2 className="w-5 h-5" />
+                  <span>Squad Membership Activated!</span>
                 </div>
-                <div>
-                  <label className="block text-xs font-meta font-extrabold uppercase text-[var(--color-ink)] mb-1">
-                    Faculty:
-                  </label>
-                  <select className="w-full px-3 py-2.5 rounded-ui border-2 border-[var(--color-ink)] bg-white text-xs font-body focus:outline-none shadow-sticker-sm">
-                    <option>Science</option>
-                    <option>Engineering</option>
-                    <option>Social Sciences</option>
-                    <option>Arts</option>
-                    <option>Agriculture</option>
-                    <option>Management</option>
-                  </select>
+                <p className="font-body text-xs text-slate-800 leading-relaxed">
+                  Welcome aboard, <strong>{joinName}</strong>! Your demo student profile for <strong>{joinCampus} ({joinFaculty})</strong> is active in this session.
+                </p>
+                <div className="p-3 rounded-lg bg-white border border-[var(--color-ink)]/15 font-meta text-xs">
+                  <span><strong>Demo Membership ID:</strong> {joinSuccess}</span>
                 </div>
+                <button
+                  onClick={closeJoinModal}
+                  className="w-full py-2.5 rounded-ui bg-[var(--color-purple)] text-white font-heading font-black text-xs uppercase border-2 border-[var(--color-ink)] shadow-sticker"
+                >
+                  Start Exploring
+                </button>
               </div>
+            ) : (
+              <>
+                <p className="text-sm font-body text-slate-700 leading-relaxed">
+                  Connect with 1,200+ students across FUOYE Oye & Ikole campuses. Share gists, find hackathon teammates, and get notified about student opportunities.
+                </p>
 
-              <button
-                type="submit"
-                className="w-full py-3.5 rounded-ui bg-[var(--color-green)] text-white font-heading font-black text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker hover:shadow-sticker-lg active:translate-x-0.5 active:translate-y-0.5 transition"
-              >
-                JOIN THE KONNECT NOW 🔥
-              </button>
-            </form>
+                <form onSubmit={handleJoinSubmit} className="space-y-3.5 pt-1">
+                  <div>
+                    <label className="block text-xs font-meta font-extrabold uppercase text-[var(--color-ink)] mb-1">
+                      Full Name / Campus Handle (Demo) *
+                    </label>
+                    <input
+                      type="text"
+                      value={joinName}
+                      onChange={(e) => {
+                        setJoinName(e.target.value);
+                        if (joinError) setJoinError("");
+                      }}
+                      placeholder="e.g. Alex Adebayo"
+                      className={`w-full px-3.5 py-2.5 rounded-ui border-2 text-sm font-body bg-white focus:outline-none shadow-sticker-sm ${
+                        joinError ? "border-red-600 bg-red-50" : "border-[var(--color-ink)]"
+                      }`}
+                    />
+                    {joinError && (
+                      <p className="text-[11px] font-bold text-red-600 mt-1 flex items-center gap-1">
+                        <AlertCircle className="w-3.5 h-3.5" /> {joinError}
+                      </p>
+                    )}
+                  </div>
+
+                  <div className="grid grid-cols-2 gap-2.5">
+                    <div>
+                      <label className="block text-xs font-meta font-extrabold uppercase text-[var(--color-ink)] mb-1">
+                        Campus:
+                      </label>
+                      <select
+                        value={joinCampus}
+                        onChange={(e) => setJoinCampus(e.target.value)}
+                        className="w-full px-3 py-2.5 rounded-ui border-2 border-[var(--color-ink)] bg-white text-xs font-body focus:outline-none shadow-sticker-sm"
+                      >
+                        <option>Oye (Main Campus)</option>
+                        <option>Ikole Campus</option>
+                      </select>
+                    </div>
+                    <div>
+                      <label className="block text-xs font-meta font-extrabold uppercase text-[var(--color-ink)] mb-1">
+                        Faculty:
+                      </label>
+                      <select
+                        value={joinFaculty}
+                        onChange={(e) => setJoinFaculty(e.target.value)}
+                        className="w-full px-3 py-2.5 rounded-ui border-2 border-[var(--color-ink)] bg-white text-xs font-body focus:outline-none shadow-sticker-sm"
+                      >
+                        <option>Science</option>
+                        <option>Engineering</option>
+                        <option>Social Sciences</option>
+                        <option>Arts</option>
+                        <option>Agriculture</option>
+                        <option>Management</option>
+                      </select>
+                    </div>
+                  </div>
+
+                  <div className="p-2.5 rounded-ui bg-amber-50 border border-amber-200 text-amber-900 text-[11px] flex items-center gap-2">
+                    <Info className="w-3.5 h-3.5 shrink-0 text-amber-700" />
+                    <span>Demo Mode: No personal records are stored on a server.</span>
+                  </div>
+
+                  <button
+                    type="submit"
+                    className="w-full py-3.5 rounded-ui bg-[var(--color-green)] text-white font-heading font-black text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker hover:shadow-sticker-lg active:translate-x-0.5 active:translate-y-0.5 transition"
+                  >
+                    JOIN THE KONNECT NOW 🔥
+                  </button>
+                </form>
+              </>
+            )}
           </div>
         </div>
       )}
