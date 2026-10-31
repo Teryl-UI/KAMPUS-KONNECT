@@ -55,6 +55,17 @@ export default function ProjectDetailPage() {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [submittedApplication, setSubmittedApplication] = useState<ApplicationData | null>(null);
 
+  // Keyboard navigation: Escape key closes modal
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isApplyModalOpen) {
+        setIsApplyModalOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isApplyModalOpen]);
+
   if (!project) {
     return (
       <div className="max-w-3xl mx-auto px-4 py-20 text-center space-y-4">
@@ -407,15 +418,24 @@ export default function ProjectDetailPage() {
 
       {/* PROJECT PARTICIPATION MODAL (DEMO INTERACTION) */}
       {isApplyModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--color-ink)]/70 backdrop-blur-sm animate-in fade-in">
-          <div className="bg-[var(--color-warm-white)] rounded-panel border-4 border-[var(--color-ink)] shadow-sticker-xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 space-y-5">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="apply-modal-title"
+          onClick={() => setIsApplyModalOpen(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--color-ink)]/70 backdrop-blur-sm animate-in fade-in"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="bg-[var(--color-warm-white)] rounded-panel border-4 border-[var(--color-ink)] shadow-sticker-xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 space-y-5"
+          >
             {/* Modal Header */}
             <div className="flex items-start justify-between border-b-2 border-[var(--color-ink)] pb-3">
               <div className="space-y-1">
                 <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-[var(--color-yellow)] text-[var(--color-ink)] text-[10px] font-meta font-extrabold uppercase border border-[var(--color-ink)]">
                   <span>⚡ SIMULATED DEMO INTERACTION</span>
                 </div>
-                <h2 className="text-2xl font-display uppercase tracking-tight text-[var(--color-ink)]">
+                <h2 id="apply-modal-title" className="text-2xl font-display uppercase tracking-tight text-[var(--color-ink)]">
                   Express Interest in Project
                 </h2>
                 <p className="text-xs font-body text-slate-600">

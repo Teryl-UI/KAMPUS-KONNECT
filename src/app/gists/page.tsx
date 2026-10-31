@@ -23,6 +23,17 @@ export default function CampusGistsPage() {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [publishedSuccess, setPublishedSuccess] = useState<string | null>(null);
 
+  // Keyboard navigation: Escape key closes modal
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isModalOpen) {
+        setIsModalOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isModalOpen]);
+
   // Reactions state
   const [reactionsMap, setReactionsMap] = useState<
     Record<string, { fire: number; mindblown: number; laugh: number }>
@@ -355,14 +366,23 @@ export default function CampusGistsPage() {
 
       {/* DROP A GIST MODAL */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--color-ink)]/70 backdrop-blur-sm animate-in fade-in">
-          <div className="bg-[var(--color-warm-white)] rounded-panel border-4 border-[var(--color-ink)] shadow-sticker-xl max-w-lg w-full p-6 sm:p-8 space-y-5">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="gist-modal-title"
+          onClick={() => setIsModalOpen(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--color-ink)]/70 backdrop-blur-sm animate-in fade-in"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="bg-[var(--color-warm-white)] rounded-panel border-4 border-[var(--color-ink)] shadow-sticker-xl max-w-lg w-full p-6 sm:p-8 space-y-5"
+          >
             <div className="flex items-center justify-between border-b-2 border-[var(--color-ink)] pb-3">
               <div className="space-y-0.5">
                 <span className="text-[10px] font-meta font-extrabold uppercase px-2 py-0.5 rounded bg-[var(--color-yellow)] text-[var(--color-ink)] border border-[var(--color-ink)]">
                   SIMULATED DEMO INTERACTION
                 </span>
-                <h2 className="text-2xl font-display uppercase tracking-tight text-[var(--color-ink)] pt-1">
+                <h2 id="gist-modal-title" className="text-2xl font-display uppercase tracking-tight text-[var(--color-ink)] pt-1">
                   Drop a Campus Gist
                 </h2>
               </div>

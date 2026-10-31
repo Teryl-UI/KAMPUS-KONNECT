@@ -30,6 +30,17 @@ export default function FindPeoplePage() {
   const [formErrors, setFormErrors] = useState<Record<string, string>>({});
   const [submissionSuccess, setSubmissionSuccess] = useState<string | null>(null);
 
+  // Keyboard navigation: Escape key closes modal
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && isModalOpen) {
+        setIsModalOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [isModalOpen]);
+
   const projectTypes = ["All", "Hackathon", "Final Year Project", "Open Source", "Startup"];
 
   // Dynamically extract all unique skills & interests from profiles
@@ -431,14 +442,23 @@ export default function FindPeoplePage() {
 
       {/* POST A LINK-UP MODAL (WITH FORM VALIDATION & NOTICE) */}
       {isModalOpen && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--color-ink)]/70 backdrop-blur-sm animate-in fade-in">
-          <div className="bg-[var(--color-warm-white)] rounded-panel border-4 border-[var(--color-ink)] shadow-sticker-xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 space-y-5">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="teammates-modal-title"
+          onClick={() => setIsModalOpen(false)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--color-ink)]/70 backdrop-blur-sm animate-in fade-in"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="bg-[var(--color-warm-white)] rounded-panel border-4 border-[var(--color-ink)] shadow-sticker-xl max-w-lg w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 space-y-5"
+          >
             <div className="flex items-center justify-between border-b-2 border-[var(--color-ink)] pb-3">
               <div className="space-y-0.5">
                 <span className="text-[10px] font-meta font-extrabold uppercase px-2 py-0.5 rounded bg-[var(--color-yellow)] text-[var(--color-ink)] border border-[var(--color-ink)]">
                   SIMULATED COLLABORATION DEMO
                 </span>
-                <h2 className="text-2xl font-display uppercase tracking-tight text-[var(--color-ink)] pt-1">
+                <h2 id="teammates-modal-title" className="text-2xl font-display uppercase tracking-tight text-[var(--color-ink)] pt-1">
                   Post a Link-Up Request
                 </h2>
               </div>

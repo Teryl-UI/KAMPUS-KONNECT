@@ -29,6 +29,17 @@ export default function EventsPage() {
   const [activeEventDetail, setActiveEventDetail] = useState<CampusEvent | null>(null);
   const [copiedShareId, setCopiedShareId] = useState<string | null>(null);
 
+  // Keyboard navigation: Escape key closes modal
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape" && activeEventDetail) {
+        setActiveEventDetail(null);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [activeEventDetail]);
+
   const campusOptions = ["All", "Oye (Main)", "Ikole", "Virtual"];
   const categoryOptions = ["All", "Tech", "Academic", "Career", "Social", "Sports"];
 
@@ -307,8 +318,17 @@ export default function EventsPage() {
 
       {/* EVENT DETAIL MODAL */}
       {activeEventDetail && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--color-ink)]/70 backdrop-blur-sm animate-in fade-in">
-          <div className="bg-[var(--color-warm-white)] rounded-panel border-4 border-[var(--color-ink)] shadow-sticker-xl max-w-xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 space-y-6">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="event-modal-title"
+          onClick={() => setActiveEventDetail(null)}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--color-ink)]/70 backdrop-blur-sm animate-in fade-in"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="bg-[var(--color-warm-white)] rounded-panel border-4 border-[var(--color-ink)] shadow-sticker-xl max-w-xl w-full max-h-[90vh] overflow-y-auto p-6 sm:p-8 space-y-6"
+          >
             <div className="flex items-start justify-between gap-4 border-b-2 border-[var(--color-ink)] pb-4">
               <div className="space-y-1">
                 <div className="flex items-center gap-2">
@@ -319,7 +339,7 @@ export default function EventsPage() {
                     {activeEventDetail.category}
                   </span>
                 </div>
-                <h2 className="text-2xl sm:text-3xl font-display uppercase tracking-tight text-[var(--color-ink)] pt-1">
+                <h2 id="event-modal-title" className="text-2xl sm:text-3xl font-display uppercase tracking-tight text-[var(--color-ink)] pt-1">
                   {activeEventDetail.title}
                 </h2>
                 <p className="text-xs font-meta text-slate-600">

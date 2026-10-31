@@ -49,6 +49,18 @@ export default function Navbar() {
     setJoinError("");
   };
 
+  // Keyboard navigation: Escape closes modal or mobile menu
+  React.useEffect(() => {
+    const handleKeyDown = (e: KeyboardEvent) => {
+      if (e.key === "Escape") {
+        if (showJoinModal) closeJoinModal();
+        if (mobileMenuOpen) setMobileMenuOpen(false);
+      }
+    };
+    window.addEventListener("keydown", handleKeyDown);
+    return () => window.removeEventListener("keydown", handleKeyDown);
+  }, [showJoinModal, mobileMenuOpen]);
+
   return (
     <>
       <header className="sticky top-0 z-40 bg-[var(--color-warm-white)]/95 backdrop-blur-md border-b-2 border-[var(--color-ink)] shadow-sticker-sm transition-all">
@@ -172,8 +184,17 @@ export default function Navbar() {
 
       {/* Join Community Modal with Validated State */}
       {showJoinModal && (
-        <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--color-ink)]/70 backdrop-blur-sm animate-in fade-in">
-          <div className="bg-[var(--color-warm-white)] rounded-panel border-4 border-[var(--color-ink)] shadow-sticker-xl max-w-md w-full p-6 sm:p-8 space-y-5 relative overflow-hidden">
+        <div
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="join-modal-title"
+          onClick={closeJoinModal}
+          className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-[var(--color-ink)]/70 backdrop-blur-sm animate-in fade-in"
+        >
+          <div
+            onClick={(e) => e.stopPropagation()}
+            className="bg-[var(--color-warm-white)] rounded-panel border-4 border-[var(--color-ink)] shadow-sticker-xl max-w-md w-full p-6 sm:p-8 space-y-5 relative overflow-hidden"
+          >
             {/* Corner Decorative bar */}
             <div className="absolute top-0 left-0 right-0 h-3 bg-gradient-to-r from-[var(--color-yellow)] via-[var(--color-red)] via-[var(--color-purple)] to-[var(--color-green)]" />
 
@@ -182,7 +203,7 @@ export default function Navbar() {
                 <Sticker variant="yellow" rotate="left" emoji="⚡">
                   STUDENT SQUAD
                 </Sticker>
-                <h2 className="text-2xl font-display uppercase tracking-tight text-[var(--color-ink)] pt-2">
+                <h2 id="join-modal-title" className="text-2xl font-display uppercase tracking-tight text-[var(--color-ink)] pt-2">
                   Join Kampus Konnect
                 </h2>
               </div>

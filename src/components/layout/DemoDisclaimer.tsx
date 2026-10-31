@@ -17,7 +17,7 @@ export default function DemoDisclaimer() {
         <div className="flex items-center gap-2">
           <Info className="w-4 h-4 text-amber-700 shrink-0" aria-hidden="true" />
           <span>
-            <strong>Demonstration Notice:</strong> Campus Connect is currently running with realistic sample data for Federal University Oye-Ekiti (FUOYE). Student profiles and event listings are for prototype demonstration.
+            <strong>Demonstration Notice:</strong> Kampus Konnect is currently running with realistic sample data for Federal University Oye-Ekiti (FUOYE). Student profiles, gists, and event listings are for prototype demonstration.
           </span>
         </div>
         <button
