@@ -3,6 +3,14 @@
   "version": "1.0.0",
   "private": true,
   "description": "Kampus Konnect - An open-source university community platform for students at Federal University Oye-Ekiti (FUOYE). Connect. Collaborate. Thrive.",
+  "homepage": "https://kampus-konnect.vercel.app",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/Teryl-UI/KAMPUS-KONNECT.git"
+  },
+  "bugs": {
+    "url": "https://github.com/Teryl-UI/KAMPUS-KONNECT/issues"
+  },
   "author": "Teryl-UI",
   "license": "Apache-2.0",
   "keywords": [

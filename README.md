@@ -2,17 +2,25 @@
 ### Connect. Collaborate. Thrive.
 **An Open-Source Community Platform for Students at the Federal University Oye-Ekiti (FUOYE), Nigeria.**
 
+[![Live Demo](https://img.shields.io/badge/Live%20Demo-kampus--konnect.vercel.app-08B957?style=for-the-badge&logo=vercel&logoColor=white)](https://kampus-konnect.vercel.app)
+[![GitHub Repository](https://img.shields.io/badge/GitHub-Teryl--UI%2FKAMPUS--KONNECT-57248C?style=for-the-badge&logo=github&logoColor=white)](https://github.com/Teryl-UI/KAMPUS-KONNECT)
 [![Next.js 14](https://img.shields.io/badge/Next.js-14.2-black.svg?style=flat&logo=next.js)](https://nextjs.org/)
 [![TypeScript](https://img.shields.io/badge/TypeScript-5.6-3178C6.svg?style=flat&logo=typescript)](https://www.typescriptlang.org/)
 [![Tailwind CSS](https://img.shields.io/badge/Tailwind-3.4-38bdf8.svg?style=flat&logo=tailwind-css)](https://tailwindcss.com/)
 [![License: Apache 2.0](https://img.shields.io/badge/License-Apache--2.0-blue.svg?style=flat)](./LICENSE)
 [![Hacktoberfest 2026](https://img.shields.io/badge/Hacktoberfest-2026-orange.svg?style=flat&logo=hacktoberfest)](https://hacktoberfest.com/)
-[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FTeryl-UI%2FKAMPUS-KONNECT)
+[![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FTeryl-UI%2FKAMPUS-KONNECT&env=GEMMA_API_KEY,GEMMA_MODEL)
 [![PRs Welcome](https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=flat)](./CONTRIBUTING.md)
+
+> 🌐 **Live URL**: [https://kampus-konnect.vercel.app](https://kampus-konnect.vercel.app)  
+> 📦 **GitHub Repository**: [https://github.com/Teryl-UI/KAMPUS-KONNECT](https://github.com/Teryl-UI/KAMPUS-KONNECT)  
+> 🤖 **Konnect AI Workspace**: [/ai](https://kampus-konnect.vercel.app/ai) (Powered by Google Gemma)  
+> 💬 **Interactive Copilot**: Persistent assistant available on every page
 
 ---
 
 ## 📖 Table of Contents
+- [Live Demo & Quick Links](#-live-demo--quick-links)
 - [About the Project](#-about-the-project)
 - [The Problem We Solve](#-the-problem-we-solve)
 - [Target Users](#-target-users)
@@ -28,6 +36,17 @@
 - [Project Roadmap](#-project-roadmap)
 - [Acknowledgements](#-acknowledgements)
 - [License](#-license)
+
+---
+
+## 🚀 Live Demo & Quick Links
+
+| Resource | URL | Description |
+| :--- | :--- | :--- |
+| 🌐 **Live Website** | [https://kampus-konnect.vercel.app](https://kampus-konnect.vercel.app) | Production deployment on Vercel |
+| 🤖 **Konnect AI Workspace** | [https://kampus-konnect.vercel.app/ai](https://kampus-konnect.vercel.app/ai) | Google Gemma-powered student copilot |
+| 📦 **GitHub Source Code** | [https://github.com/Teryl-UI/KAMPUS-KONNECT](https://github.com/Teryl-UI/KAMPUS-KONNECT) | Main open-source repository |
+| ⚡ **1-Click Deploy** | [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2FTeryl-UI%2FKAMPUS-KONNECT&env=GEMMA_API_KEY,GEMMA_MODEL) | Deploy your own copy instantly to Vercel |
 
 ---
 
