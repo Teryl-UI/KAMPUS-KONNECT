@@ -86,9 +86,9 @@ export default function Navbar() {
                   <Link
                     key={link.href}
                     href={link.href}
-                    className={`relative inline-flex items-center gap-1 xl:gap-1.5 px-2.5 xl:px-3.5 py-1.5 xl:py-2 rounded-xl text-[11px] xl:text-xs font-heading font-extrabold tracking-wide uppercase transition-all duration-150 focus:outline-none focus:ring-2 focus:ring-[var(--color-purple)] shrink-0 whitespace-nowrap ${
+                    className={`relative inline-flex items-center gap-1 xl:gap-1.5 px-2.5 xl:px-3.5 py-1.5 xl:py-2 rounded-xl text-[11px] xl:text-xs font-heading font-extrabold tracking-wide uppercase transition-colors duration-150 focus:outline-none focus:ring-2 focus:ring-[var(--color-purple)] shrink-0 whitespace-nowrap ${
                       active
-                        ? "bg-[var(--color-purple)] text-white shadow-sticker-sm -translate-y-0.5"
+                        ? "bg-[var(--color-purple)] text-white shadow-sticker-sm"
                         : "text-[var(--color-ink)] hover:bg-[var(--color-lavender)] hover:text-[var(--color-purple)]"
                     }`}
                     aria-current={active ? "page" : undefined}
@@ -106,26 +106,26 @@ export default function Navbar() {
               })}
             </nav>
 
-            {/* Primary Action Button: Join / Link Up */}
+            {/* Primary Action Button: Join The Squad (Straight, single line, no slant or drop) */}
             <div className="hidden lg:flex items-center shrink-0 whitespace-nowrap">
               <button
                 onClick={() => setShowJoinModal(true)}
-                className="relative group overflow-hidden px-3.5 xl:px-5 py-2 xl:py-2.5 rounded-ui bg-[var(--color-yellow)] hover:bg-amber-300 text-[var(--color-ink)] font-heading font-black text-xs xl:text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker hover:shadow-sticker-lg active:translate-x-0.5 active:translate-y-0.5 transition-all shrink-0 whitespace-nowrap"
+                className="relative inline-flex items-center justify-center gap-2 px-4 xl:px-5 py-2.5 rounded-2xl bg-[var(--color-yellow)] hover:bg-amber-300 text-[var(--color-ink)] font-heading font-black text-xs xl:text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker hover:shadow-sticker-lg transition-all shrink-0 whitespace-nowrap select-none leading-none"
               >
-                <span className="inline-flex items-center gap-1.5 shrink-0 whitespace-nowrap">
-                  <span>JOIN SQUAD</span>
-                  <span className="group-hover:rotate-45 transition-transform shrink-0">⚡</span>
-                </span>
+                <span className="whitespace-nowrap">JOIN THE SQUAD</span>
+                <span className="shrink-0 text-sm">⚡</span>
               </button>
             </div>
 
-            {/* Mobile Hamburger Toggle */}
+            {/* Mobile / Tablet Action (Clean, straight, non-wrapping) */}
             <div className="flex lg:hidden items-center gap-2 shrink-0 whitespace-nowrap">
               <button
                 onClick={() => setShowJoinModal(true)}
-                className="px-3 py-1.5 rounded-lg bg-[var(--color-yellow)] text-[var(--color-ink)] border-2 border-[var(--color-ink)] font-heading font-black text-xs shadow-sticker-sm shrink-0 whitespace-nowrap active:translate-y-0.5"
+                className="inline-flex items-center gap-1.5 px-3 py-2 rounded-xl bg-[var(--color-yellow)] hover:bg-amber-300 text-[var(--color-ink)] border-2 border-[var(--color-ink)] font-heading font-black text-xs shadow-sticker-sm shrink-0 whitespace-nowrap leading-none select-none transition-all"
               >
-                JOIN
+                <span className="hidden sm:inline whitespace-nowrap">JOIN THE SQUAD</span>
+                <span className="sm:hidden whitespace-nowrap">JOIN</span>
+                <span className="shrink-0">⚡</span>
               </button>
               <button
                 onClick={() => setMobileMenuOpen(!mobileMenuOpen)}
@@ -180,9 +180,9 @@ export default function Navbar() {
                   setMobileMenuOpen(false);
                   setShowJoinModal(true);
                 }}
-                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[var(--color-red)] text-white font-heading font-black text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker"
+                className="w-full flex items-center justify-center gap-2 py-3.5 rounded-xl bg-[var(--color-yellow)] hover:bg-amber-300 text-[var(--color-ink)] font-heading font-black text-sm uppercase tracking-wider border-2 border-[var(--color-ink)] shadow-sticker transition-all"
               >
-                <span>BECOME A KONNECTOR 🚀</span>
+                <span>JOIN THE SQUAD ⚡</span>
               </button>
             </div>
           </nav>
